@@ -1,6 +1,8 @@
 package Front;
 
 import java.time.LocalDate;
+
+import Back.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +20,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage; 
 
 public class CreateTimeline extends Application {
+	String des; 
+	String tlt; 
+	LocalDate start; 
+	LocalDate end; 
+	
 	@Override
 	public void start(Stage primaryStage){ 
 		Button createTimeline = new Button("Create"); 
@@ -81,22 +88,20 @@ public class CreateTimeline extends Application {
 			
 			@Override 
 			public void handle(ActionEvent event) { 
-			Label label = new Label("Add new Timeline script here");
-			label.setTextFill(Color.RED);
-			buttns.getChildren().clear(); 
-			buttns.getChildren().addAll(label);
-			primaryStage.show(); 
-				
+			des= description.getText(); 
+			tlt = title.getText(); 
+			start = startDatePicker.getValue(); 
+			end = endDatePicker.getValue(); 
+			Timeline line = new Timeline(tlt,start,end,des); 
+			System.out.println(line.toString());  
 			}
 		});
 		cancelTimeline.setOnAction(new EventHandler<ActionEvent>(){
 			@Override 
 			public void handle(ActionEvent event){ 
-			Label label = new Label("Load new Timeline script here");
-			label.setTextFill(Color.RED);
-			buttns.getChildren().clear(); 
-			buttns.getChildren().addAll(label); 
-			primaryStage.show(); 
+				TimelineBuilder builder = new TimelineBuilder(); 
+				builder.start(primaryStage);
+				primaryStage.show();  
 			}
 		}); 
 		

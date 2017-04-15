@@ -1,5 +1,6 @@
 package Back;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
@@ -18,12 +19,12 @@ public class Timeline {
 	int id; 
 	ArrayList<Event> events = new ArrayList<Event>();
 	String title;
-	int startTime; 
-	int endTime;
+	LocalDate startTime; 
+	LocalDate endTime;
 	String description; 
 
 	/* Timeline Constructor */
-	public Timeline(String title, int startTime, int endTime, String description){
+	public Timeline(String title, LocalDate startTime, LocalDate endTime, String description){
 		setTitle(title); 
 		setStartTime(startTime);
 		setEndTime(endTime); 
@@ -37,15 +38,15 @@ public class Timeline {
 			System.err.println("Error on title");
 		}
 	}
-	public void setStartTime(int startTime){ 
-		if(startTime>0){
+	public void setStartTime(LocalDate startTime){ 
+		if(true){
 			this.startTime = startTime; 
 		}else{
 			System.err.println("Error on startTime"); 
 	}
 	}
-	public void setEndTime(int endTime){ 
-		if(endTime>startTime){ 
+	public void setEndTime(LocalDate endTime){ 
+		if(true){ 
 			this.endTime = endTime; 
 		}else{
 			System.err.println("Error on endTime"); 
@@ -62,10 +63,10 @@ public class Timeline {
 	public String getTitle(){ 
 		return title; 
 	}
-	public int getStartTime(){
+	public LocalDate getStartTime(){
 		return startTime; 
 	}
-	public int getEndTime(){ 
+	public LocalDate getEndTime(){ 
 		return endTime; 
 	}
 	public String getDescription(){ 
@@ -118,8 +119,10 @@ public class Timeline {
 		return scene;
 		
 	}
-	
-	
+	@Override
+	public String toString(){ 
+	return "Timeline: " + "\n" + "Title : " + title + "\n" +  "Description: " + description + "\n" +  "Start Date: " + startTime + "\n" + "End Date: " + endTime; 
+	}
 	
 	
 	

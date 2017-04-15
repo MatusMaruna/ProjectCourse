@@ -1,9 +1,13 @@
 package Front;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,12 +53,9 @@ public class TimelineBuilder extends Application {
 			
 			@Override 
 			public void handle(ActionEvent event) { 
-			Label label = new Label("Add new Timeline script here");
-			label.setTextFill(Color.RED);
-			buttns.getChildren().clear(); 
-			buttns.getChildren().addAll(label);
-			primaryStage.show(); 
-				
+				CreateTimeline ctl = new CreateTimeline(); 
+				ctl.start(primaryStage);
+				primaryStage.show(); 	 	
 			}
 		});
 		loadTimeline.setOnAction(new EventHandler<ActionEvent>(){
