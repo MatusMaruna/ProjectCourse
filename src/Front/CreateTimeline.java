@@ -1,4 +1,4 @@
-package front;
+package Front;
 
 import java.time.LocalDate;
 import javafx.application.Application;
