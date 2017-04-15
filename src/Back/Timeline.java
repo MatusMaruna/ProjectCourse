@@ -3,15 +3,20 @@ package Back;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Timeline {
@@ -35,28 +40,48 @@ public class Timeline {
 		if(title.length()>0){
 			this.title = title; 
 		}else{ 
-			System.err.println("Error on title");
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Title must have a value");
+
+			alert.showAndWait();
 		}
 	}
 	public void setStartTime(LocalDate startTime){ 
-		if(true){
+		if(startTime != null){
 			this.startTime = startTime; 
 		}else{
-			System.err.println("Error on startTime"); 
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Start date must have a value");
+
+			alert.showAndWait();
 	}
 	}
 	public void setEndTime(LocalDate endTime){ 
-		if(true){ 
+		if(startTime.isBefore(endTime)){ 
 			this.endTime = endTime; 
 		}else{
-			System.err.println("Error on endTime"); 
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("End date must have a value greater than start date");
+
+			alert.showAndWait(); 
 		}
 	}
 	public void setDescription(String description){ 
 		if(description.length()>0){
 			this.description = description; 
 		}else{ 
-			System.err.println("Error on description");
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Description must have a value");
+
+			alert.showAndWait();
 		}	
 	}
 	/* Getters */
