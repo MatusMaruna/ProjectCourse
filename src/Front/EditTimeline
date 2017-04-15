@@ -17,10 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage; 
 
-public class EditEvent extends Application {
+public class EditTimeline extends Application {
 	@Override
 	public void start(Stage primaryStage){ 
-		Button submitEvent = new Button("Submit"); 
+		Button submitToTimeline = new Button("Submit"); 
 		Button deleteEvent = new Button("Delete");
 		Button cancelEvent = new Button("Cancel");
 		
@@ -31,21 +31,21 @@ public class EditEvent extends Application {
 
 		/* Pane Positioning to get buttons beside each other */
 		Pane buttns = new Pane(); 
-		submitEvent.setTranslateX(75);
-		submitEvent.setTranslateY(250);
+		submitToTimeline.setTranslateX(75);
+		submitToTimeline.setTranslateY(250);
 		deleteEvent.setTranslateX(142);
 		deleteEvent.setTranslateY(250);
 		cancelEvent.setTranslateX(205);
 		cancelEvent.setTranslateY(250);
-		submitEvent.setPadding(new Insets(10,10,10,10));
+		submitToTimeline.setPadding(new Insets(10,10,10,10));
 		deleteEvent.setPadding(new Insets(10,10,10,10));
 		cancelEvent.setPadding(new Insets(10,10,10,10));
 		
 		/* Grid with title and description*/
 		GridPane grid = new GridPane();
 		grid.setHgap(20);
-	  grid.setVgap(10);
-	  grid.setPadding(new Insets(10, 0, 0, 80));
+	    grid.setVgap(10);
+	    grid.setPadding(new Insets(10, 0, 0, 80));
 		final TextField title = new TextField();
 		title.setPromptText("Title");
 		title.setAlignment(Pos.BASELINE_LEFT);
@@ -61,29 +61,29 @@ public class EditEvent extends Application {
 		
 		/* Datepicker */
 		DatePicker startDatePicker = new DatePicker();
-	  DatePicker endDatePicker = new DatePicker();
+	    DatePicker endDatePicker = new DatePicker();
 	    
-	  startDatePicker.setValue(LocalDate.now());
-	  endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
+	    startDatePicker.setValue(LocalDate.now());
+	    endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
-	  grid.add(new Label("Start Date:"), 0, 3);
-	  GridPane.setConstraints(startDatePicker, 0, 4);
-	  grid.getChildren().add(startDatePicker);
+	    grid.add(new Label("Start Date:"), 0, 3);
+	    GridPane.setConstraints(startDatePicker, 0, 4);
+	    grid.getChildren().add(startDatePicker);
 	    
-	  grid.add(new Label("End Date:"), 0, 5);
-	  GridPane.setConstraints(endDatePicker, 0, 6);
-	  grid.getChildren().add(endDatePicker);
+	    grid.add(new Label("End Date:"), 0, 5);
+	    GridPane.setConstraints(endDatePicker, 0, 6);
+	    grid.getChildren().add(endDatePicker);
 	    
 		
-		buttns.getChildren().addAll (grid, submitEvent, deleteEvent, cancelEvent); 
+		buttns.getChildren().addAll (grid, submitToTimeline, deleteEvent, cancelEvent); 
 		root.getChildren().addAll(buttns); 
 		Scene scene = new Scene(root, 300, 300);
 		
 		/* Here is what the buttons will do */
-		submitEvent.setOnAction(new EventHandler<ActionEvent>(){
+		submitToTimeline.setOnAction(new EventHandler<ActionEvent>(){
 			
 			@Override 
-	  public void handle(ActionEvent event) { 
+			public void handle(ActionEvent event) { 
 			Label label = new Label("Add new Timeline script here");
 			label.setTextFill(Color.RED);
 			buttns.getChildren().clear(); 
@@ -115,7 +115,7 @@ public class EditEvent extends Application {
 		}); 
 		
 		/* Displaying the stage */
-		primaryStage.setTitle("Edit Event");
+		primaryStage.setTitle("Edit Timeline");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show(); 
