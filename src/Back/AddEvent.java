@@ -1,4 +1,4 @@
-package application;
+package Back;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +38,7 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import timline.Sqlconnect;
+import Back.Sqlconnect;
 
 public class AddEvent extends Application {
 
@@ -74,7 +74,7 @@ public class AddEvent extends Application {
 		primaryStage.setTitle("Add Event ");
 
 		/* method to for checking connection to the database */
-		CheckConection();
+		//CheckConection();
 
 		name = new TextField();
 		name.setFont(new Font(20));
@@ -108,70 +108,70 @@ public class AddEvent extends Application {
 		 */
 		Button savbut = new Button("Save");
 		savbut.setFont(new Font(30));
-		savbut.setOnAction(e -> {
-
-			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
-			try {
-				pre = con.prepareStatement(query);
-				pre.setString(1, name.getText());
-				pre.setString(2, description.getText());
-
-				pre.setString(3, sdate.getEditor().getText());
-
-				pre.setString(4, edate.getEditor().getText());
-
-				fil = new FileInputStream(file);
-				pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
-
-				Alert alet = new Alert(AlertType.INFORMATION);
-				alet.setTitle("infor dialog");
-				alet.setHeaderText(null);
-				alet.setContentText("user created");
-				alet.showAndWait();
-				pre.execute();
-
-				pre.close();
-				ClearFields();
-				refresTable();
-			} catch (SQLException e1) {
-				// label.setText("SQL error");
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-		});
+//		savbut.setOnAction(e -> {
+//
+//			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
+//			try {
+//				pre = con.prepareStatement(query);
+//				pre.setString(1, name.getText());
+//				pre.setString(2, description.getText());
+//
+//				pre.setString(3, sdate.getEditor().getText());
+//
+//				pre.setString(4, edate.getEditor().getText());
+//
+//				fil = new FileInputStream(file);
+//				pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
+//
+//				Alert alet = new Alert(AlertType.INFORMATION);
+//				alet.setTitle("infor dialog");
+//				alet.setHeaderText(null);
+//				alet.setContentText("user created");
+//				alet.showAndWait();
+//				pre.execute();
+//
+//				pre.close();
+//				ClearFields();
+//				refresTable();
+//			} catch (SQLException e1) {
+//				// label.setText("SQL error");
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//
+//		});
 
 	
 		Button delete = new Button("Delete");
 		delete.setFont(new Font(30));
-		delete.setOnAction(e -> {
-			Alert alet = new Alert(AlertType.CONFIRMATION);
-			alet.setTitle("Comfrimation");
-			alet.setHeaderText(null);
-
-			alet.setContentText("Are u sure u wanna delete?");
-			Optional<ButtonType> action = alet.showAndWait();
-			if (action.get() == ButtonType.OK) {
-				try {
-
-					String query = "delete from database where Name= ?";
-					pre = con.prepareStatement(query);
-
-					pre.setString(1, name.getText());
-
-					pre.executeUpdate();
-
-					pre.close();
-				} catch (SQLException e2) {
-
-					e2.printStackTrace();
-				}
-				ClearFields();
-				refresTable();
-
-			}
-		});
+//		delete.setOnAction(e -> {
+//			Alert alet = new Alert(AlertType.CONFIRMATION);
+//			alet.setTitle("Comfrimation");
+//			alet.setHeaderText(null);
+//
+//			alet.setContentText("Are u sure u wanna delete?");
+//			Optional<ButtonType> action = alet.showAndWait();
+//			if (action.get() == ButtonType.OK) {
+//				try {
+//
+//					String query = "delete from database where Name= ?";
+//					pre = con.prepareStatement(query);
+//
+//					pre.setString(1, name.getText());
+//
+//					pre.executeUpdate();
+//
+//					pre.close();
+//				} catch (SQLException e2) {
+//
+//					e2.printStackTrace();
+//				}
+//				ClearFields();
+//				refresTable();
+//
+//			}
+//		});
 		
 		
 		/*
@@ -321,16 +321,16 @@ public class AddEvent extends Application {
 	}
 	/* database connection */
 
-	private void CheckConection() throws SQLException {
-
-		con = Sqlconnect.DbConnector();
-		if (con == null) {
-			System.out.println("Not connected");
-			System.exit(1);
-		} else {
-			System.out.println("connected");
-		}
-
-	}
+//	private void CheckConection() throws SQLException {
+//
+//		con = Sqlconnect.DbConnector();
+//		if (con == null) {
+//			System.out.println("Not connected");
+//			System.exit(1);
+//		} else {
+//			System.out.println("connected");
+//		}
+//
+//	}
 
 }

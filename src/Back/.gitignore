@@ -2,3 +2,6 @@
 /test.class
 /Timeline.class
 /Event.class
+/AddEvent.class
+/CreatEvent.class
+/Sqlconnect.class
