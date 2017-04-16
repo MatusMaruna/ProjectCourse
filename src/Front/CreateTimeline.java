@@ -92,8 +92,8 @@ public class CreateTimeline extends Application {
 			tlt = title.getText(); 
 			start = startDatePicker.getValue(); 
 			end = endDatePicker.getValue(); 
-			Timeline line = new Timeline(tlt,start,end,des); 
-			System.out.println(line.toString());  
+			//Timeline line = new Timeline(tlt,start,end,des); 
+			//System.out.println(line.toString());  
 			}
 		});
 		cancelTimeline.setOnAction(new EventHandler<ActionEvent>(){

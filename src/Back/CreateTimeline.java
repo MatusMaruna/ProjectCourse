@@ -1,4 +1,4 @@
-package timline;
+package Back;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import Front.TimelineBuilder;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -166,14 +167,7 @@ public class CreateTimeline extends Application {
 		cancelTimeline.setOnAction(e -> {
 
 			TimelineBuilder builder = new TimelineBuilder();
-			try {
-				builder.start(primaryStage);
-			} catch (SQLException ex) {
-
-				ex.printStackTrace();
-
-				primaryStage.show();
-			}
+			builder.start(primaryStage);
 		});
 
 		/* Displaying the stage */
