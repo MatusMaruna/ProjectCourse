@@ -1,155 +1,83 @@
-package Back;
+package timline;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.beans.property.SimpleStringProperty;
 
 public class Timeline {
 	/* Timeline attributes */
-	int id; 
-	ArrayList<Event> events = new ArrayList<Event>();
-	String title;
-	LocalDate startTime; 
-	LocalDate endTime;
-	String description; 
 
-	/* Timeline Constructor */
-	public Timeline(String title, LocalDate startTime, LocalDate endTime, String description){
-		setTitle(title); 
-		setStartTime(startTime);
-		setEndTime(endTime); 
-		setDescription(description); 
-	}
-	/* Setters / Validators */
-	public void setTitle(String title){
-		if(title.length()>0){
-			this.title = title; 
-		}else{ 
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText("Title must have a value");
+	// private final SimpleStringProperty id;
+	private final SimpleStringProperty title;
+	private final SimpleStringProperty startTime;
+	private final SimpleStringProperty endTime;
+	private final SimpleStringProperty description;
 
-			alert.showAndWait();
-		}
-	}
-	public void setStartTime(LocalDate startTime){ 
-		if(startTime != null){
-			this.startTime = startTime; 
-		}else{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText("Start date must have a value");
+	public Timeline(String tile, String sTime, String eTime, String des) {
 
-			alert.showAndWait();
+		// this.id = new SimpleStringProperty(Id);
+		this.title = new SimpleStringProperty(tile);
+		this.startTime = new SimpleStringProperty(sTime);
+		this.endTime = new SimpleStringProperty(eTime);
+		this.description = new SimpleStringProperty(des);
 	}
-	}
-	public void setEndTime(LocalDate endTime){ 
-		if(startTime.isBefore(endTime)){ 
-			this.endTime = endTime; 
-		}else{
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText("End date must have a value greater than start date");
+	/*
+	 * }
+	 * 
+	 * public String getID() { return id.get();
+	 * 
+	 * }
+	 * 
+	 * public void setID(String id) { this.id.set(id);
+	 * 
+	 * }
+	 */
 
-			alert.showAndWait(); 
-		}
-	}
-	public void setDescription(String description){ 
-		if(description.length()>0){
-			this.description = description; 
-		}else{ 
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Error");
-			alert.setHeaderText(null);
-			alert.setContentText("Description must have a value");
+	public String getTitle() {
+		return title.get();
 
-			alert.showAndWait();
-		}	
 	}
-	/* Getters */
-	public String getTitle(){ 
-		return title; 
-	}
-	public LocalDate getStartTime(){
-		return startTime; 
-	}
-	public LocalDate getEndTime(){ 
-		return endTime; 
-	}
-	public String getDescription(){ 
-		return description; 
-	}
-	/* Event manipulators */
-	public void addEvent(Event e){
-		events.add(e);
-		
-	}
-	public void deleteEvent(Event e){
-		
-		events.remove(e);
-		
-	}
-	public boolean hasEvents(){
-		if(events.isEmpty()){ 
-			return true; 
-		}else{
-			return false; 
-		}
-	}
-	public void getEvent(Event e){
-		if(events.contains(e))
-		System.out.println(e.toString());
-	}
-	
-	public Scene graphical(){
-		GridPane paneroot = new GridPane();
-		
-		
-		
 
+	public void setTitle(String title) {
+		this.title.set(title);
 
-	          for(int n = 0; n<events.size() ; n++)
-	             {
-	                StackPane stackPane = new StackPane();
-	                stackPane.setPrefSize(150.0, 200.0);
-	                stackPane.getChildren().addAll(new Label("Event: "+events.get(n).toString()));
-	                paneroot.add(stackPane,n,1);
-	             }
-	         	paneroot.setGridLinesVisible(true);
-		
-		
-		Scene scene = new Scene(paneroot,500,500);
-		
-		
-		
-		
-		return scene;
-		
 	}
-	@Override
-	public String toString(){ 
-	return "Timeline: " + "\n" + "Title : " + title + "\n" +  "Description: " + description + "\n" +  "Start Date: " + startTime + "\n" + "End Date: " + endTime; 
+
+	public String getStartTime() {
+		return startTime.get();
+
 	}
-	
-	
-	
-	
+
+	public void setStartTime(String stime) {
+		this.startTime.set(stime);
+
+	}
+
+	public String getEndTime() {
+		return endTime.get();
+
+	}
+
+	public void setEndTime(String etime) {
+		this.endTime.set(etime);
+
+	}
+
+	public String getDescription() {
+		return this.description.get();
+
+	}
+
+	public void setDescription(String ds) {
+		this.description.set(ds);
+
+	}
+
+	public static boolean isEmpty() {
+
+		if (Timeline.isEmpty())
+
+			return true;
+		else
+			return false;
+	}
+
 }
