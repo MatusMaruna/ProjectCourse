@@ -71,43 +71,38 @@ public class AddEvent extends Application {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Add Event ");
+		primaryStage.setTitle("Add Event");
 
 		/* method to for checking connection to the database */
 		//CheckConection();
 
 		name = new TextField();
-		name.setFont(new Font(20));
 		name.setPromptText("Enter Name");
 		name.setMaxWidth(300);
-
+		
 		description = new TextArea();
-
 		description.setPromptText("Description");
-		description.setFont(new Font(30));
-		description.setPrefSize(200, 20);
-		// des.setEditable(false);
 		description.setMaxWidth(300);
+		description.setMaxHeight(100);
+		
 		textArea = new TextArea();
-
 		textArea.setPromptText("File Path");
-		textArea.setFont(new Font(10));
-		textArea.setPrefSize(100, 10);
 		textArea.setEditable(false);
 		textArea.setMaxWidth(300);
+		textArea.setMaxHeight(30);
 
 		sdate = new DatePicker();
 		sdate.setPromptText("Date");
 
 		edate = new DatePicker();
 		edate.setPromptText("Date");
-		edate.setMaxHeight(100);
+		
 		/*
 		 * SaveEvent is a name of a record in the database so insert and save
 		 * values in to the database
 		 */
 		Button savbut = new Button("Save");
-		savbut.setFont(new Font(30));
+		//savbut.setFont(new Font(30));
 //		savbut.setOnAction(e -> {
 //
 //			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
@@ -144,7 +139,7 @@ public class AddEvent extends Application {
 
 	
 		Button delete = new Button("Delete");
-		delete.setFont(new Font(30));
+		//delete.setFont(new Font(30));
 //		delete.setOnAction(e -> {
 //			Alert alet = new Alert(AlertType.CONFIRMATION);
 //			alet.setTitle("Comfrimation");
@@ -182,7 +177,6 @@ public class AddEvent extends Application {
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
 		brows = new Button("upload");
-		brows.setFont(new Font(20));
 		brows.setOnAction(e -> {
 
 			file = filechooser.showOpenDialog(primaryStage);
@@ -211,19 +205,19 @@ public class AddEvent extends Application {
 		data = FXCollections.observableArrayList();
 
 		TableColumn col1 = new TableColumn<>("Name");
-		col1.setMaxWidth(100);
+		col1.setMaxWidth(10);
 		col1.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
 		TableColumn col2 = new TableColumn<>("Description");
-		col2.setMaxWidth(100);
+		col2.setMaxWidth(10);
 		col2.setCellValueFactory(new PropertyValueFactory<>("Description"));
 
 		TableColumn col3 = new TableColumn<>("StartDate");
-		col3.setMaxWidth(100);
+		col3.setMaxWidth(10);
 		col3.setCellValueFactory(new PropertyValueFactory<>("StartDate"));
 
 		TableColumn col4 = new TableColumn<>("EndDate");
-		col4.setMaxWidth(100);
+		col4.setMaxWidth(10);
 		col4.setCellValueFactory(new PropertyValueFactory<>("EndDate"));
 
 		table.getColumns().addAll(col1, col2, col3, col4);
@@ -232,39 +226,39 @@ public class AddEvent extends Application {
 
 		/* canecel by claering the fields */
 		Button cancel = new Button("Cancel");
-		cancel.setFont(new Font(30));
 		cancel.setOnAction(e -> {
 			ClearFields();
 
 		});
 		
 		// bp.setCenter(table);
-		// table.setPrefSize(50, 10);
+		table.setMaxSize(50, 10);
 		// bp.setPadding(new Insets(10, 50, 50, 10));
 
 		GridPane grigp = new GridPane();
 		grigp.add(name, 0, 1);
-		grigp.setVgap(15);
-		grigp.add(new Label("Description:"), 0, 3);
+		grigp.setVgap(5);
+		//grigp.add(new Label("Description:"), 0, 3);
 
 		GridPane.setConstraints(description, 0, 4);
 		grigp.getChildren().add(description);
 
-		grigp.setAlignment(Pos.CENTER);
 
 		grigp.add(textArea, 0, 6);
 		grigp.add(brows, 1, 6);
+		grigp.setTranslateX(98); 
 		Label startDate = new Label("Start Date");
 		
-		sdate.setPadding(new Insets (10,10,10,10));
+		//sdate.setPadding(new Insets (10,10,10,10));
 		Label endDate = new Label("End Date");
 		endDate.setAlignment(Pos.CENTER);
-		edate.setPadding(new Insets (10,10,10,10));
+		//edate.setPadding(new Insets (10,10,10,10));
 		
 		HBox hb = new HBox();
+		hb.setAlignment(Pos.CENTER);
 		hb.getChildren().addAll(savbut, delete ,cancel);
-		hb.setSpacing(50);
-		hb.setPadding(new Insets(30, 0, 0, 90));
+		hb.setSpacing(10);
+	//	hb.setPadding(new Insets(30, 0, 0, 90));
 		
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(startDate, sdate, endDate, edate);
@@ -274,10 +268,12 @@ public class AddEvent extends Application {
 		VBox vb = new VBox();
 		vb.setAlignment(Pos.CENTER);
 		vb.getChildren().addAll(grigp, vbox, hb);
-		vb.setSpacing(20);
-		Scene scene = new Scene(vb, 600, 600, Color.rgb(200, 139, 128));
+		vb.setSpacing(10);
+		vb.setStyle("-fx-background-color: LIGHTGREY");
+		Scene scene = new Scene(vb, 500, 350);
 
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	/*
