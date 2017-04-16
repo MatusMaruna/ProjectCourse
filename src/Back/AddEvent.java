@@ -238,6 +238,7 @@ public class AddEvent extends Application {
 		GridPane grigp = new GridPane();
 		grigp.add(name, 0, 1);
 		grigp.setVgap(5);
+		grigp.setHgap(5);
 		//grigp.add(new Label("Description:"), 0, 3);
 
 		GridPane.setConstraints(description, 0, 4);
