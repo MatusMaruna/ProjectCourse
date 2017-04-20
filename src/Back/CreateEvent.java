@@ -2,7 +2,7 @@ package Back;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public class CreatEvent {
+public class CreateEvent {
 
 	/*
 	 * here we dont border about the types bc we only decide them when adding
@@ -10,35 +10,35 @@ public class CreatEvent {
 	 */
 	private final SimpleStringProperty name;
 	private final SimpleStringProperty Description;
-	private final SimpleStringProperty sDate;
-	private final SimpleStringProperty eDate;
+	private final SimpleStringProperty startDate;
+	private final SimpleStringProperty endDate;
 
-	public CreatEvent(String name, String dis, String sdate, String edate) {
+	public CreateEvent(String name, String dis, String sdate, String edate) {
 
 		this.name = new SimpleStringProperty(name);
 		this.Description = new SimpleStringProperty(dis);
-		this.sDate = new SimpleStringProperty(sdate);
-		this.eDate = new SimpleStringProperty(edate);
+		this.startDate = new SimpleStringProperty(sdate);
+		this.endDate = new SimpleStringProperty(edate);
 
 	}
 
 	public String getEndDate() {
-		return eDate.get();
+		return endDate.get();
 
 	}
 
-	public void etEndDate(String name) {
-		this.sDate.set(name);
+	public void setEndDate(String name) {
+		this.startDate.set(name);
 
 	}
 
 	public String getStartDate() {
-		return sDate.get();
+		return startDate.get();
 
 	}
 
 	public void setStartDate(String name) {
-		this.sDate.set(name);
+		this.startDate.set(name);
 
 	}
 
