@@ -47,7 +47,7 @@ public class CreateTimeline extends Application {
 	@Override
 	public void start(Stage primaryStage) throws SQLException, FileNotFoundException {
 
-		CheckConection();
+		CheckConnection();
 
 		Button createTimeline = new Button("Create");
 		Button cancelTimeline = new Button("Cancel");
@@ -155,7 +155,7 @@ public class CreateTimeline extends Application {
 					pre.close();
 
 					ClearFields();
-					refresTable();
+					refreshTable();
 
 					// hasEvents();
 				} catch (SQLException e1) {
@@ -177,7 +177,7 @@ public class CreateTimeline extends Application {
 		primaryStage.show();
 	}
 
-	public void refresTable() {
+	public void refreshTable() {
 		data.clear();
 
 		try {
@@ -229,7 +229,7 @@ public class CreateTimeline extends Application {
 		return false;
 	}
 
-	private void CheckConection() throws SQLException {
+	private void CheckConnection() throws SQLException {
 
 		con = Sqlconnect.DbConnector();
 		if (con == null) {
