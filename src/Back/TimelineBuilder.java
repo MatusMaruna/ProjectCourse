@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import Back.Sqlconnect;
-import exampl.User;
+import exampl.User;  
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,7 +46,7 @@ import javafx.scene.effect.DropShadow;
 		public void start(Stage primaryStage) throws SQLException{ 
        
        		
-       		Button nwTimeline = new Button("New Timeline"); 
+       		Button newTimeline = new Button("New Timeline"); 
 			Button loadTimeline = new Button("Load Timeline");
 			
 			/* Drop Shadow and header effects */
@@ -66,16 +66,16 @@ import javafx.scene.effect.DropShadow;
 			buttns.setAlignment(Pos.CENTER);
 			buttns.setSpacing(10);
 			root.setSpacing(10);
-			nwTimeline.setAlignment(Pos.CENTER); 
-			nwTimeline.setPadding(new Insets(10,10,10,10));
+			newTimeline.setAlignment(Pos.CENTER); 
+			newTimeline.setPadding(new Insets(10,10,10,10));
 			loadTimeline.setPadding(new Insets(10,10,10,10));
 			
-			buttns.getChildren().addAll(header,nwTimeline,loadTimeline); 
+			buttns.getChildren().addAll(header,newTimeline,loadTimeline); 
 			root.getChildren().add(buttns); 
 			Scene scene = new Scene(root, 300, 200);
 			
 			/* Here is what the buttons will do */
-			nwTimeline.setOnAction(new EventHandler<ActionEvent>(){
+			newTimeline.setOnAction(new EventHandler<ActionEvent>(){
 				
 				@Override 
 				public void handle(ActionEvent event) { 
