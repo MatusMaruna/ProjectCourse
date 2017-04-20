@@ -50,8 +50,8 @@ public class AddEvent extends Application {
 	TextArea textArea;
 	TextArea description;
 
-	TableView<CreatEvent> table;
-	ObservableList<CreatEvent> data;
+	TableView<CreateEvent> table;
+	ObservableList<CreateEvent> data;
 
 	private FileChooser filechooser;
 	private Button brows;
@@ -71,102 +71,106 @@ public class AddEvent extends Application {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Add Event");
+		primaryStage.setTitle("Add Event ");
 
 		/* method to for checking connection to the database */
-		//CheckConection();
-
+		
 		name = new TextField();
+		name.setFont(new Font(20));
 		name.setPromptText("Enter Name");
 		name.setMaxWidth(300);
-		
+
 		description = new TextArea();
+
 		description.setPromptText("Description");
+		description.setFont(new Font(30));
+		description.setPrefSize(200, 20);
+		// des.setEditable(false);
 		description.setMaxWidth(300);
-		description.setMaxHeight(100);
-		
 		textArea = new TextArea();
+
 		textArea.setPromptText("File Path");
+		textArea.setFont(new Font(10));
+		textArea.setPrefSize(100, 10);
 		textArea.setEditable(false);
 		textArea.setMaxWidth(300);
-		textArea.setMaxHeight(30);
 
 		sdate = new DatePicker();
 		sdate.setPromptText("Date");
 
 		edate = new DatePicker();
 		edate.setPromptText("Date");
-		
+		edate.setMaxHeight(100);
 		/*
 		 * SaveEvent is a name of a record in the database so insert and save
 		 * values in to the database
 		 */
-		Button savbut = new Button("Save");
-		//savbut.setFont(new Font(30));
-//		savbut.setOnAction(e -> {
-//
-//			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
-//			try {
-//				pre = con.prepareStatement(query);
-//				pre.setString(1, name.getText());
-//				pre.setString(2, description.getText());
-//
-//				pre.setString(3, sdate.getEditor().getText());
-//
-//				pre.setString(4, edate.getEditor().getText());
-//
-//				fil = new FileInputStream(file);
-//				pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
-//
-//				Alert alet = new Alert(AlertType.INFORMATION);
-//				alet.setTitle("infor dialog");
-//				alet.setHeaderText(null);
-//				alet.setContentText("user created");
-//				alet.showAndWait();
-//				pre.execute();
-//
-//				pre.close();
-//				ClearFields();
-//				refresTable();
-//			} catch (SQLException e1) {
-//				// label.setText("SQL error");
-//			} catch (FileNotFoundException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//
-//		});
+		Button savebuttton = new Button("Save");
+		savebuttton.setFont(new Font(30));
+		savebuttton.setOnAction(e -> {
+
+			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
+			try {
+				pre = con.prepareStatement(query);
+				pre.setString(1, name.getText());
+				pre.setString(2, description.getText());
+
+				pre.setString(3, sdate.getEditor().getText());
+
+				pre.setString(4, edate.getEditor().getText());
+
+				fil = new FileInputStream(file);
+				pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
+
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("infor dialog");
+				alert.setHeaderText(null);
+				alert.setContentText("user created");
+				alert.showAndWait();
+				pre.execute();
+
+				pre.close();
+				ClearFields();
+				refreshTable();
+			} catch (SQLException e1) {
+				// label.setText("SQL error");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+		});
 
 	
 		Button delete = new Button("Delete");
-		//delete.setFont(new Font(30));
-//		delete.setOnAction(e -> {
-//			Alert alet = new Alert(AlertType.CONFIRMATION);
-//			alet.setTitle("Comfrimation");
-//			alet.setHeaderText(null);
-//
-//			alet.setContentText("Are u sure u wanna delete?");
-//			Optional<ButtonType> action = alet.showAndWait();
-//			if (action.get() == ButtonType.OK) {
-//				try {
-//
-//					String query = "delete from database where Name= ?";
-//					pre = con.prepareStatement(query);
-//
-//					pre.setString(1, name.getText());
-//
-//					pre.executeUpdate();
-//
-//					pre.close();
-//				} catch (SQLException e2) {
-//
-//					e2.printStackTrace();
-//				}
-//				ClearFields();
-//				refresTable();
-//
-//			}
-//		});
+		delete.setFont(new Font(30));
+		delete.setOnAction(e -> {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Comfrimation");
+			alert.setHeaderText(null);
+
+			alert.setContentText("Are u sure you want to delete?");
+			Optional<ButtonType> action = alert.showAndWait();
+			if (action.get() == ButtonType.OK) {
+				try {
+
+					String query = "delete from database where Name= ?";
+					pre = con.prepareStatement(query);
+
+					pre.setString(1, name.getText());
+
+					pre.executeUpdate();
+
+					pre.close();
+				} catch (SQLException e2) {
+
+					e2.printStackTrace();
+				}
+				ClearFields();
+				refreshTable();
+
+			}
+		});
 		
 		
 		/*
@@ -177,12 +181,13 @@ public class AddEvent extends Application {
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
 		brows = new Button("upload");
+		brows.setFont(new Font(20));
 		brows.setOnAction(e -> {
 
 			file = filechooser.showOpenDialog(primaryStage);
 			if (file != null) {
 
-				// deskt.open(file);
+				//deskt.open(file);
 				textArea.setText(file.getAbsolutePath());
 
 				im = new Image(file.toURI().toString(), 100, 150, true, true);
@@ -205,19 +210,19 @@ public class AddEvent extends Application {
 		data = FXCollections.observableArrayList();
 
 		TableColumn col1 = new TableColumn<>("Name");
-		col1.setMaxWidth(10);
+		col1.setMaxWidth(100);
 		col1.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
 		TableColumn col2 = new TableColumn<>("Description");
-		col2.setMaxWidth(10);
+		col2.setMaxWidth(100);
 		col2.setCellValueFactory(new PropertyValueFactory<>("Description"));
 
 		TableColumn col3 = new TableColumn<>("StartDate");
-		col3.setMaxWidth(10);
+		col3.setMaxWidth(100);
 		col3.setCellValueFactory(new PropertyValueFactory<>("StartDate"));
 
 		TableColumn col4 = new TableColumn<>("EndDate");
-		col4.setMaxWidth(10);
+		col4.setMaxWidth(100);
 		col4.setCellValueFactory(new PropertyValueFactory<>("EndDate"));
 
 		table.getColumns().addAll(col1, col2, col3, col4);
@@ -226,40 +231,39 @@ public class AddEvent extends Application {
 
 		/* canecel by claering the fields */
 		Button cancel = new Button("Cancel");
+		cancel.setFont(new Font(30));
 		cancel.setOnAction(e -> {
 			ClearFields();
 
 		});
 		
 		// bp.setCenter(table);
-		table.setMaxSize(50, 10);
+		// table.setPrefSize(50, 10);
 		// bp.setPadding(new Insets(10, 50, 50, 10));
 
 		GridPane grigp = new GridPane();
 		grigp.add(name, 0, 1);
-		grigp.setVgap(5);
-		grigp.setHgap(5);
-		//grigp.add(new Label("Description:"), 0, 3);
+		grigp.setVgap(15);
+		grigp.add(new Label("Description:"), 0, 3);
 
 		GridPane.setConstraints(description, 0, 4);
 		grigp.getChildren().add(description);
 
+		grigp.setAlignment(Pos.CENTER);
 
 		grigp.add(textArea, 0, 6);
 		grigp.add(brows, 1, 6);
-		grigp.setTranslateX(98); 
 		Label startDate = new Label("Start Date");
 		
-		//sdate.setPadding(new Insets (10,10,10,10));
+		sdate.setPadding(new Insets (10,10,10,10));
 		Label endDate = new Label("End Date");
 		endDate.setAlignment(Pos.CENTER);
-		//edate.setPadding(new Insets (10,10,10,10));
+		edate.setPadding(new Insets (10,10,10,10));
 		
 		HBox hb = new HBox();
-		hb.setAlignment(Pos.CENTER);
-		hb.getChildren().addAll(savbut, delete ,cancel);
-		hb.setSpacing(10);
-	//	hb.setPadding(new Insets(30, 0, 0, 90));
+		hb.getChildren().addAll(savebuttton, delete ,cancel);
+		hb.setSpacing(50);
+		hb.setPadding(new Insets(30, 0, 0, 90));
 		
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(startDate, sdate, endDate, edate);
@@ -269,12 +273,10 @@ public class AddEvent extends Application {
 		VBox vb = new VBox();
 		vb.setAlignment(Pos.CENTER);
 		vb.getChildren().addAll(grigp, vbox, hb);
-		vb.setSpacing(10);
-		vb.setStyle("-fx-background-color: LIGHTGREY");
-		Scene scene = new Scene(vb, 500, 350);
+		vb.setSpacing(20);
+		Scene scene = new Scene(vb, 600, 600, Color.rgb(200, 139, 128));
 
 		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	/*
@@ -282,7 +284,7 @@ public class AddEvent extends Application {
 	 * adding the same thing more than once
 	 */
 
-	public void refresTable() {
+	public void refreshTable() {
 		data.clear();
 
 		try {
@@ -290,7 +292,7 @@ public class AddEvent extends Application {
 			pre = con.prepareStatement(sql);
 			result = pre.executeQuery();
 			while (result.next()) {
-				data.add(new CreatEvent(result.getString("Name"), result.getString("Description"),
+				data.add(new CreateEvent(result.getString("Name"), result.getString("Description"),
 						result.getString("StartDate"), result.getString("EndDate")));
 
 				table.setItems(data);
@@ -318,16 +320,16 @@ public class AddEvent extends Application {
 	}
 	/* database connection */
 
-//	private void CheckConection() throws SQLException {
-//
-//		con = Sqlconnect.DbConnector();
-//		if (con == null) {
-//			System.out.println("Not connected");
-//			System.exit(1);
-//		} else {
-//			System.out.println("connected");
-//		}
-//
-//	}
+	private void CheckConnection() throws SQLException {
+
+		con = Sqlconnect.DbConnector();
+		if (con == null) {
+			System.out.println("Not connected");
+			System.exit(1);
+		} else {
+			System.out.println("connected");
+		}
+
+	}
 
 }
