@@ -28,7 +28,7 @@ public class CreateEvent {
 	}
 
 	public void setEndDate(String name) {
-		this.startDate.set(name);
+		this.endDate.set(name);
 
 	}
 
