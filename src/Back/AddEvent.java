@@ -1,15 +1,20 @@
-package Back;
+package project;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Optional;
 
+import exampl.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,29 +43,37 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-import Back.Sqlconnect;
 
+/**
+ * @author quent
+ *
+ */
 public class AddEvent extends Application {
 
 	/* fields */
-	Connection con = null;
-	PreparedStatement pre = null;
-	ResultSet result = null;
-	TextField name;
-	TextArea textArea;
-	TextArea description;
-
-	TableView<CreateEvent> table;
-	ObservableList<CreateEvent> data;
-
-	private FileChooser filechooser;
-	private Button brows;
-	private File file;
+	static Connection con = null;
+	static PreparedStatement pre = null;
+	static ResultSet result = null;
+	static TextField name;
+	static TextField address;
+	static TextArea description;
+	static TableView<Event> table;
+	static ObservableList<Event> data;
+	static FileChooser filechooser;
+	static Button brows;
+	static File file;
 	// private Desktop deskt = Desktop.getDesktop();
-	DatePicker sdate, edate;
-	private ImageView imv;
-	private Image im;
-	private FileInputStream fil;
+	static DatePicker sdate;
+	static DatePicker edate;
+	static ImageView imv;
+	static Image im;
+	static FileInputStream fil;
+	static Button delete;
+	static Button savbut;
+	static Button load;
+	static Button update;
+	@SuppressWarnings("rawtypes")
+	static TableColumn col1, col2, col3, col4;
 
 	/* main method */
 	public static void main(String[] args) {
@@ -68,32 +81,30 @@ public class AddEvent extends Application {
 		launch(args);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Add Event ");
+		primaryStage.setTitle("New Timeline ");
 
 		/* method to for checking connection to the database */
-		
+		CheckConection();
+
 		name = new TextField();
 		name.setFont(new Font(20));
-		name.setPromptText("Enter Name");
+		name.setPromptText("Enter Title");
 		name.setMaxWidth(300);
 
 		description = new TextArea();
+		description.setPromptText("Description ");
+		description.setPrefWidth(20);
+		description.setPrefHeight(100);
 
-		description.setPromptText("Description");
-		description.setFont(new Font(30));
-		description.setPrefSize(200, 20);
-		// des.setEditable(false);
-		description.setMaxWidth(300);
-		textArea = new TextArea();
-
-		textArea.setPromptText("File Path");
-		textArea.setFont(new Font(10));
-		textArea.setPrefSize(100, 10);
-		textArea.setEditable(false);
-		textArea.setMaxWidth(300);
+		address = new TextField();
+		address.setFont(new Font(10));
+		address.setPrefSize(100, 10);
+		address.setEditable(false);
+		address.setMaxWidth(300);
+		address.setPromptText("Address ");
 
 		sdate = new DatePicker();
 		sdate.setPromptText("Date");
@@ -101,78 +112,66 @@ public class AddEvent extends Application {
 		edate = new DatePicker();
 		edate.setPromptText("Date");
 		edate.setMaxHeight(100);
+
 		/*
 		 * SaveEvent is a name of a record in the database so insert and save
 		 * values in to the database
 		 */
-		Button savebuttton = new Button("Save");
-		savebuttton.setFont(new Font(30));
-		savebuttton.setOnAction(e -> {
+		BorderPane borderP = new BorderPane();
+		savbut = new Button("Save");
+		savbut.setFont(new Font(15));
+		savbut.setOnAction(e -> {
+			if (name.getText().isEmpty() || description.getText().isEmpty() || sdate.getEditor().getText().isEmpty()
+					|| edate.getEditor().getText().isEmpty() || address.getText().isEmpty()) {
 
-			String query = "INSERT INTO database (Name, Description,StartDate, EndDate, Image) VALUES (?,?,?,?,?)";
-			try {
-				pre = con.prepareStatement(query);
-				pre.setString(1, name.getText());
-				pre.setString(2, description.getText());
+				Alert alet = new Alert(AlertType.INFORMATION);
+				alet.setTitle("infor dialog");
+				alet.setHeaderText(null);
+				alet.setContentText("None of the fields must be left empty");
+				alet.showAndWait();
 
-				pre.setString(3, sdate.getEditor().getText());
+			} else if (CheckDate()) {
+				Alert alet = new Alert(AlertType.INFORMATION);
+				alet.setTitle("infor dialog");
+				alet.setHeaderText(null);
+				alet.setContentText("check the date start date must be less than the end date");
+				alet.showAndWait();
 
-				pre.setString(4, edate.getEditor().getText());
+			} else {
 
-				fil = new FileInputStream(file);
-				pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
-
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("infor dialog");
-				alert.setHeaderText(null);
-				alert.setContentText("user created");
-				alert.showAndWait();
-				pre.execute();
-
-				pre.close();
-				ClearFields();
-				refreshTable();
-			} catch (SQLException e1) {
-				// label.setText("SQL error");
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-		});
-
-	
-		Button delete = new Button("Delete");
-		delete.setFont(new Font(30));
-		delete.setOnAction(e -> {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Comfrimation");
-			alert.setHeaderText(null);
-
-			alert.setContentText("Are u sure you want to delete?");
-			Optional<ButtonType> action = alert.showAndWait();
-			if (action.get() == ButtonType.OK) {
+				String query = "INSERT INTO SaveEvent (Name, Description, StartDate, EndDate,Image) VALUES (?,?,?,?,?)";
 				try {
-
-					String query = "delete from database where Name= ?";
 					pre = con.prepareStatement(query);
-
 					pre.setString(1, name.getText());
+					pre.setString(2, description.getText());
 
-					pre.executeUpdate();
+					pre.setString(3, sdate.getEditor().getText());
+
+					pre.setString(4, edate.getEditor().getText());
+					fil = new FileInputStream(file);
+					pre.setBinaryStream(5, (InputStream) fil, (int) file.length());
+
+					Alert alet = new Alert(AlertType.INFORMATION);
+					alet.setTitle("infor dialog");
+					alet.setHeaderText(null);
+					alet.setContentText("event created");
+					alet.showAndWait();
+					pre.execute();
 
 					pre.close();
-				} catch (SQLException e2) {
+					ClearFields();
+					refresTable();
 
-					e2.printStackTrace();
+				} catch (SQLException e1) {
+					// label.setText("SQL error");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				ClearFields();
-				refreshTable();
-
 			}
+
 		});
-		
-		
+
 		/*
 		 * uploaded files with the filechooser and save in the database
 		 */
@@ -181,14 +180,14 @@ public class AddEvent extends Application {
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
 		brows = new Button("upload");
-		brows.setFont(new Font(20));
+		brows.setFont(new Font(15));
 		brows.setOnAction(e -> {
 
 			file = filechooser.showOpenDialog(primaryStage);
 			if (file != null) {
 
-				//deskt.open(file);
-				textArea.setText(file.getAbsolutePath());
+				// deskt.open(file);
+				address.setText(file.getAbsolutePath());
 
 				im = new Image(file.toURI().toString(), 100, 150, true, true);
 
@@ -209,19 +208,19 @@ public class AddEvent extends Application {
 		table = new TableView<>();
 		data = FXCollections.observableArrayList();
 
-		TableColumn col1 = new TableColumn<>("Name");
+		col1 = new TableColumn<>("Name");
 		col1.setMaxWidth(100);
 		col1.setCellValueFactory(new PropertyValueFactory<>("Name"));
 
-		TableColumn col2 = new TableColumn<>("Description");
+		col2 = new TableColumn<>("Description");
 		col2.setMaxWidth(100);
 		col2.setCellValueFactory(new PropertyValueFactory<>("Description"));
 
-		TableColumn col3 = new TableColumn<>("StartDate");
+		col3 = new TableColumn<>("StartDate");
 		col3.setMaxWidth(100);
 		col3.setCellValueFactory(new PropertyValueFactory<>("StartDate"));
 
-		TableColumn col4 = new TableColumn<>("EndDate");
+		col4 = new TableColumn<>("EndDate");
 		col4.setMaxWidth(100);
 		col4.setCellValueFactory(new PropertyValueFactory<>("EndDate"));
 
@@ -231,19 +230,27 @@ public class AddEvent extends Application {
 
 		/* canecel by claering the fields */
 		Button cancel = new Button("Cancel");
-		cancel.setFont(new Font(30));
+		cancel.setFont(new Font(15));
 		cancel.setOnAction(e -> {
-			ClearFields();
+
+			LoadTimeline ctl = new LoadTimeline();
+			try {
+				ctl.start(primaryStage);
+			} catch (Exception e1) {
+
+				e1.printStackTrace();
+			}
+
+			primaryStage.show();
 
 		});
-		
-		// bp.setCenter(table);
-		// table.setPrefSize(50, 10);
-		// bp.setPadding(new Insets(10, 50, 50, 10));
+
+		borderP.setCenter(table);
+		borderP.setPadding(new Insets(20, 20, 20, 20));
 
 		GridPane grigp = new GridPane();
 		grigp.add(name, 0, 1);
-		grigp.setVgap(15);
+		grigp.setVgap(10);
 		grigp.add(new Label("Description:"), 0, 3);
 
 		GridPane.setConstraints(description, 0, 4);
@@ -251,48 +258,50 @@ public class AddEvent extends Application {
 
 		grigp.setAlignment(Pos.CENTER);
 
-		grigp.add(textArea, 0, 6);
-		grigp.add(brows, 1, 6);
+		grigp.add(AddEvent.address, 0, 5);
+		grigp.add(AddEvent.brows, 1, 5);
+		grigp.setHgap(10);
+
 		Label startDate = new Label("Start Date");
-		
-		sdate.setPadding(new Insets (10,10,10,10));
+		sdate.setPadding(new Insets(7, 7, 7, 7));
+		sdate.setValue(LocalDate.now());
 		Label endDate = new Label("End Date");
 		endDate.setAlignment(Pos.CENTER);
-		edate.setPadding(new Insets (10,10,10,10));
-		
+
+		edate.setPadding(new Insets(7, 7, 7, 7));
+		edate.setValue(LocalDate.now());
 		HBox hb = new HBox();
-		hb.getChildren().addAll(savebuttton, delete ,cancel);
+		hb.getChildren().addAll(cancel, savbut);
 		hb.setSpacing(50);
-		hb.setPadding(new Insets(30, 0, 0, 90));
-		
+		hb.setAlignment(Pos.BOTTOM_CENTER);
 		VBox vbox = new VBox();
 		vbox.getChildren().addAll(startDate, sdate, endDate, edate);
 		vbox.setSpacing(10);
 		vbox.setAlignment(Pos.CENTER);
-		
+
 		VBox vb = new VBox();
 		vb.setAlignment(Pos.CENTER);
 		vb.getChildren().addAll(grigp, vbox, hb);
-		vb.setSpacing(20);
-		Scene scene = new Scene(vb, 600, 600, Color.rgb(200, 139, 128));
+
+		vb.setSpacing(30);
+		borderP.setLeft(vb);
+		borderP.setPadding(new Insets(10, 10, 10, 40));
+		Scene scene = new Scene(borderP, 700, 500, Color.rgb(200, 139, 128));
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	/*
-	 * this method helps to add new event each time one is created instead of
-	 * adding the same thing more than once
-	 */
 
-	public void refreshTable() {
+	public static void refresTable() {
 		data.clear();
 
 		try {
-			String sql = "select * from database";
+			String sql = "select * from saveEvent ";
 			pre = con.prepareStatement(sql);
 			result = pre.executeQuery();
 			while (result.next()) {
-				data.add(new CreateEvent(result.getString("Name"), result.getString("Description"),
+				data.add(new Event(result.getString("Name"), result.getString("Description"),
+
 						result.getString("StartDate"), result.getString("EndDate")));
 
 				table.setItems(data);
@@ -311,18 +320,26 @@ public class AddEvent extends Application {
 	 * Clear all fields after the add button is click instead of deleting the
 	 * textfield and rewritting a new event
 	 */
-	private void ClearFields() {
+	static void ClearFields() {
 		name.clear();
 		description.clear();
-		textArea.clear();
+		address.clear();
 		sdate.setValue(null);
 		edate.setValue(null);
 	}
+
 	/* database connection */
+	public static boolean CheckDate() {
+		if (sdate.getValue().compareTo(edate.getValue()) <0  || sdate.getValue().equals(edate)) {
 
-	private void CheckConnection() throws SQLException {
+			return false;
+		}
+		return true;
+	}
+	/* database connection */
+	private void CheckConection() throws SQLException {
 
-		con = Sqlconnect.DbConnector();
+		con = Sqlconnection.DbConnector();
 		if (con == null) {
 			System.out.println("Not connected");
 			System.exit(1);
