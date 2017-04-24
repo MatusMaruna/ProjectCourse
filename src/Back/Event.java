@@ -1,39 +1,65 @@
 package Back;
 
+import javafx.beans.property.SimpleStringProperty;
+
 public class Event {
-	private int start;
-	private int end;
-	private String name;
-	private String description;
-	
-	
-	
-	public Event(int s,int e,String n){
-		start=s;
-		end=e;
-		name=n;
-		
+
+	/*
+	 * here we dont border about the types bc we only decide them when adding
+	 * them to the database so all shd be strings for now
+	 */
+	private final SimpleStringProperty name;
+	private final SimpleStringProperty Description;
+	private final SimpleStringProperty sDate;
+	private final SimpleStringProperty eDate;
+
+	public Event(String name, String dis, String sdate, String edate) {
+
+		this.name = new SimpleStringProperty(name);
+		this.Description = new SimpleStringProperty(dis);
+		this.sDate = new SimpleStringProperty(sdate);
+		this.eDate = new SimpleStringProperty(edate);
+
 	}
-	public void setStart(int n){
-		start=n;
+
+	public String getEndDate() {
+		return eDate.get();
+
 	}
-	public int getStart(){
-		return start;
+
+	public void setEndDate(String name) {
+		this.eDate.set(name);
+
 	}
-	public void setEnd(int n){
-		end=n;
+
+	public String getStartDate() {
+		return sDate.get();
+
 	}
-	public int getEnd(){
-		return end;
+
+	public void setStartDate(String name) {
+		this.sDate.set(name);
+
 	}
-	public void setDesc(String s){
-		description=s;
-		
+
+	public String getName() {
+		return name.get();
+
 	}
-	public String getDesc(){
-	return description;
+
+	public void setName(String name) {
+		this.name.set(name);
+
 	}
-		public String toString(){
-			return name+"\nStart: "+start+"\nEnd: "+end;
-		}
+
+	public String getDescription() {
+		return this.Description.get();
+
+	}
+
+	public void setDescription(String ds) {
+		this.Description.set(ds);
+
+	}
+
 }

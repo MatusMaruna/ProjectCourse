@@ -1,4 +1,4 @@
-package project;
+package Back;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,8 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
-
-import exampl.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,10 +42,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-/**
- * @author quent
- *
- */
 public class AddEvent extends Application {
 
 	/* fields */
@@ -84,7 +78,7 @@ public class AddEvent extends Application {
 	@SuppressWarnings({ "unchecked" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("New Timeline ");
+		primaryStage.setTitle("New Event");
 
 		/* method to for checking connection to the database */
 		CheckConection();
@@ -129,14 +123,6 @@ public class AddEvent extends Application {
 				alet.setHeaderText(null);
 				alet.setContentText("None of the fields must be left empty");
 				alet.showAndWait();
-
-			} else if (CheckDate()) {
-				Alert alet = new Alert(AlertType.INFORMATION);
-				alet.setTitle("infor dialog");
-				alet.setHeaderText(null);
-				alet.setContentText("check the date start date must be less than the end date");
-				alet.showAndWait();
-
 			} else {
 
 				String query = "INSERT INTO SaveEvent (Name, Description, StartDate, EndDate,Image) VALUES (?,?,?,?,?)";
@@ -163,9 +149,8 @@ public class AddEvent extends Application {
 					refresTable();
 
 				} catch (SQLException e1) {
-					// label.setText("SQL error");
+					e1.printStackTrace(); 
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -296,7 +281,7 @@ public class AddEvent extends Application {
 		data.clear();
 
 		try {
-			String sql = "select * from saveEvent ";
+			String sql = "select * from SaveEvent ";
 			pre = con.prepareStatement(sql);
 			result = pre.executeQuery();
 			while (result.next()) {
@@ -327,16 +312,8 @@ public class AddEvent extends Application {
 		sdate.setValue(null);
 		edate.setValue(null);
 	}
-
 	/* database connection */
-	public static boolean CheckDate() {
-		if (sdate.getValue().compareTo(edate.getValue()) <0  || sdate.getValue().equals(edate)) {
 
-			return false;
-		}
-		return true;
-	}
-	/* database connection */
 	private void CheckConection() throws SQLException {
 
 		con = Sqlconnection.DbConnector();

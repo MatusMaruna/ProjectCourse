@@ -158,8 +158,8 @@ public class CreateTimeline extends Application {
 					refreshTable();
 
 					// hasEvents();
-				} catch (SQLException e1) {
-				} // label.setText("SQL error");
+				} catch (SQLException e1) { e1.printStackTrace(); 
+				} 
 			}
 
 		});
@@ -231,7 +231,7 @@ public class CreateTimeline extends Application {
 
 	private void CheckConnection() throws SQLException {
 
-		con = Sqlconnect.DbConnector();
+		con = Sqlconnection.DbConnector();
 		if (con == null) {
 			System.out.println("Not connected");
 			System.exit(1);

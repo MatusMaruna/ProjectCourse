@@ -6,3 +6,9 @@
 /CreatEvent.class
 /Sqlconnect.class
 /TimelineBuilder.class
+/CreateEvent.class
+/EditEvent.class
+/EditTimeline.class
+/LoadTimeline.class
+/Sqlconnection.class
+/package-info.class
