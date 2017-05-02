@@ -56,7 +56,6 @@ public class AddEvent extends Application {
 	static FileChooser filechooser;
 	static Button brows;
 	static File file;
-	// private Desktop deskt = Desktop.getDesktop();
 	static DatePicker sdate;
 	static DatePicker edate;
 	static ImageView imv;

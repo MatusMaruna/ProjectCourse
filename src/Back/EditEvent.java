@@ -176,9 +176,8 @@ public class EditEvent extends Application {
 				AddEvent.ClearFields();
 				AddEvent.refresTable();
 			} catch (SQLException e1) {
-				// label.setText("SQL error");
+				e1.printStackTrace();
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
