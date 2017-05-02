@@ -23,7 +23,8 @@ public class TimelineView extends Application {
 		VBox buttons = new VBox(); 
 		Button addEvent = new Button("Add Event"); 
 		Button editEvent = new Button("Edit Event"); 
-		buttons.setAlignment(Pos.TOP_LEFT);
+		buttons.setAlignment(Pos.TOP_RIGHT);
+		buttons.getChildren().addAll(addEvent,editEvent); 
 		root.getChildren().addAll(buttons); 
 		
 		/* Displaying the stage */
