@@ -2,20 +2,30 @@ package Back;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 
-public class TimelineView extends Application{
+public class TimelineView extends Application implements Initializable{
 
 
 	/*make sure that the application.css and the timelineview.fxml is in the same package */	
 	
+	public static String labelname;
+	
+	@FXML
+	private Label LabelNameView;
 	
 	// Event Listener on Button.onAction
 	@FXML
@@ -23,6 +33,7 @@ public class TimelineView extends Application{
 		AddEvent add = new AddEvent();
 		Stage stage = new Stage();
 		try {
+			
 			add.start(stage);
 		} catch (Exception e1) {
 
@@ -65,11 +76,15 @@ public class TimelineView extends Application{
 		stage.setTitle("Edit Timeline");
 		
 	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		 try {
-    	   Parent root = FXMLLoader.load(getClass().getResource("timelineview.fxml"));
 			
+			
+    	    Parent root = FXMLLoader.load(getClass().getResource("timelineview.fxml"));
+    	   
 			Scene scene = new Scene(root);
 			
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -78,7 +93,7 @@ public class TimelineView extends Application{
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
+
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -87,7 +102,14 @@ public class TimelineView extends Application{
 	}
 
 	public static void main(String[] args) {
-
+		
 		launch(args);
+	}
+
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		LabelNameView.setText(labelname);
+		
 	}
 }
