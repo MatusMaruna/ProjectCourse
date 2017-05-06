@@ -1,11 +1,17 @@
 package Back;
 
 import java.sql.SQLException;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+ import   java.util.Date;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -20,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
 
 public class LoadTimeline extends Application {
 
@@ -187,8 +194,53 @@ public class LoadTimeline extends Application {
 			stage.show();
 			stage.setTitle("Edit Event");
 		});
+		
+		Button viewTimeline = new Button("View Timeline");
+		editevent.setPadding(new Insets(10, 10, 10, 10));
+		// editevent.setFont(new Font(20));
+		
+		viewTimeline.setOnAction(e -> {
+              try {
+                Event tm = AddEvent.table.getSelectionModel().getSelectedItem();
+            	  
+            	String date1 =   tm.getStartDate();
+            	String date2 =   tm.getEndDate();
+            	
+            
+            	 Calendar cal1 = new GregorianCalendar();
+                 Calendar cal2 = new GregorianCalendar();
+
+                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                 Date date = sdf.parse(date1);
+                 cal1.setTime(date);
+                 date = sdf.parse(date2);
+                 cal2.setTime(date);
+
+                 
+            	  
+                 TimelineView.daysnumber = daysBetween(cal1.getTime(),cal2.getTime());
+            	  TimelineView event = new TimelineView();
+
+      		
+      				event.start(stage);
+      				
+      				stage.show();
+          			stage.setTitle(tm.getName());
+      				
+      			} catch (Exception e1) {
+
+      				e1.printStackTrace();
+      			}
+      			
+            	 
+			
+		});
+		
+	
+		
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(addevent, editevent, editimeline, exit, AddEvent.load);
+		vbox.getChildren().addAll(addevent, editevent, editimeline, exit, viewTimeline, AddEvent.load);
 		vbox.setSpacing(20);
 
 		borderP.setPadding(new Insets(20, 20, 20, 20));
@@ -213,5 +265,7 @@ public class LoadTimeline extends Application {
 		}
 
 	}
-
+	public int daysBetween(Date d1, Date d2){
+        return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+}
 }

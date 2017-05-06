@@ -17,99 +17,119 @@ import javafx.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 
-public class TimelineView extends Application implements Initializable{
 
 
-	/*make sure that the application.css and the timelineview.fxml is in the same package */	
-	
-	public static String labelname;
-	
-	@FXML
-	private Label LabelNameView;
-	
-	// Event Listener on Button.onAction
-	@FXML
-	public void addEvent(ActionEvent event) {
-		AddEvent add = new AddEvent();
-		Stage stage = new Stage();
-		try {
-			
-			add.start(stage);
-		} catch (Exception e1) {
+import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
-			e1.printStackTrace();
-		}
 
-		stage.show();
+public class TimelineView extends Application{
 
-	}
+	public static int daysnumber ;
 	
+	  
 	
-	// Event Listener on Button.onAction
-	@FXML
-	public void editEvent(ActionEvent event) {
-		EditEvent event1 = new EditEvent();
-		Stage stage = new Stage();
-		try {
-			event1.start(stage);
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
-		}
-		stage.show();
-		stage.setTitle("Edit Event");
-	}
-	
-	
-	// Event Listener on Button.onAction
-	@FXML
-	public void editTimeline(ActionEvent event) {
-		EditTimeline timeline = new EditTimeline();
-		Stage stage = new Stage();
-		try {
-			timeline.start(stage);
-		} catch (Exception e1) {
-
-			e1.printStackTrace();
-		}
-		stage.show();
-		stage.setTitle("Edit Timeline");
+    @Override
+	public void start(Stage primaryStage){ 
+    	
+		HBox root = new HBox();
 		
-	}
+		GridPane buttons = new GridPane();
+		
+		System.out.println("Days= "+daysnumber);
+		
+		
+		
+		/* Buttons with attributes*/
+		Button addEvent = new Button("Add Event"); 
+		Button editEvent = new Button("Edit Event"); 
+		Button editTimeline = new Button("Edit Timeline"); 
+		Button saveTimeline = new Button("Save Timeline"); 
+		
+		/*Buttons get the same size */
+		addEvent.setMaxWidth(Double.MAX_VALUE);
+		editEvent.setMaxWidth(Double.MAX_VALUE);
+		editTimeline.setMaxWidth(Double.MAX_VALUE);
+		saveTimeline.setMaxWidth(Double.MAX_VALUE);
+		buttons.setHgap(15);
+	    buttons.setVgap(10);
+	    
+	    /*Position of the buttons */
+	    GridPane.setMargin(addEvent, new Insets(5, 0, 0, 0));
+		GridPane.setConstraints(addEvent, 52, 0);
+		GridPane.setConstraints(editEvent, 52, 1);
+		GridPane.setConstraints(editTimeline, 52, 2);
+		GridPane.setConstraints(saveTimeline, 52, 3);
+		editTimeline.setMinWidth(Region.USE_PREF_SIZE);
+		saveTimeline.setMinWidth(Region.USE_PREF_SIZE);
 	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+		/* The background of the buttons */
+		Rectangle backgroundButtons = new Rectangle(150, 170);
+		GridPane.setConstraints(backgroundButtons,26, 0, 29, 5, HPos.RIGHT, VPos.TOP);
+		backgroundButtons.setFill(Color.LIGHTGREY);
+		backgroundButtons.setStroke(Color.BLACK);
+		backgroundButtons.setStrokeWidth(1);
 		
-		 try {
-			
-			
-    	    Parent root = FXMLLoader.load(getClass().getResource("timelineview.fxml"));
-    	   
-			Scene scene = new Scene(root);
-			
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			
-			
-			
-			primaryStage.setScene(scene);
-			primaryStage.show();
-
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		/* The scroll bar with its property (Will have to change the content) */
+		ScrollPane sp = new ScrollPane();
+		sp.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+		sp.setVbarPolicy(ScrollBarPolicy.NEVER);
+        sp.setPrefSize(900, 600);
+        sp.setContent(buttons);
+        sp.setFitToWidth(true);
+	    
+       
+        Rectangle r = new Rectangle(100,100);
+        r.setArcHeight(15);
+        r.setArcWidth(15);
+        buttons.setConstraints(r, 0, 10);
+        
+        int c = 0;
+        for(int a = 0; a < 4; a++){  //instead of 4 we add the daysnumber value
+        Rectangle r1 = new Rectangle(100,100);
+        r1.setArcHeight(15);
+        r1.setArcWidth(15);
+        c = c +5 ;   //      
+        buttons.setConstraints(r1, c, 10);
+        buttons.getChildren().add(r1);
+        }
+        
+        
+		/* Getting the children */
+		buttons.getChildren().addAll(backgroundButtons, addEvent,editEvent, editTimeline, saveTimeline,r); 
+		root.getChildren().addAll(buttons,sp); 
 		
+		//days 
+		
+      //  buttons.getChildren().add(r); 
+		
+		/* Displaying the stage */
+		Scene scene = new Scene(root,900,600); 
+		primaryStage.setTitle("Timeline View");
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show(); 
 	}
+
+   
 
 	public static void main(String[] args) {
-		
-		launch(args);
+		launch(args); 
+
 	}
 
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		LabelNameView.setText(labelname);
-		
-	}
 }
+
