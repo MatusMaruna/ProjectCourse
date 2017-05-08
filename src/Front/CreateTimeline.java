@@ -1,7 +1,12 @@
 package Front;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import Back.LoadTimeline;
 import Back.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -88,12 +93,40 @@ public class CreateTimeline extends Application {
 			
 			@Override 
 			public void handle(ActionEvent event) { 
-			des= description.getText(); 
-			tlt = title.getText(); 
-			start = startDatePicker.getValue(); 
-			end = endDatePicker.getValue(); 
-			//Timeline line = new Timeline(tlt,start,end,des); 
-			//System.out.println(line.toString());  
+				des= description.getText(); 
+				tlt = title.getText(); 
+				start = startDatePicker.getValue(); 
+				end = endDatePicker.getValue(); 
+				//Timeline line = new Timeline(tlt,start,end,des); 
+				//System.out.println(line.toString());  
+				
+				
+				/*converting localdate-> yyyy/mm/dd to date-> dd/mm/yyyy calculating the days between them and starting the 
+				 timelineview class*/
+				TimelineView tm = new TimelineView();
+
+				
+				 Calendar cal1 = new GregorianCalendar();
+				 Calendar cal2 = new GregorianCalendar();
+
+				 Date date = java.sql.Date.valueOf(start);
+				 Date date2 = java.sql.Date.valueOf(end);
+				 
+				 
+				 cal1.setTime(date);
+				 TimelineView.firstdate = date;
+				 
+      
+				 cal2.setTime(date2);
+				 TimelineView.lastdate = date2;
+				 
+				 LoadTimeline ld = new LoadTimeline();
+				  
+				  TimelineView.daysnumber = ld.daysBetween(cal1.getTime(),cal2.getTime());
+				  
+				tm.start(primaryStage);
+				primaryStage.show();
+
 			}
 		});
 		cancelTimeline.setOnAction(new EventHandler<ActionEvent>(){
