@@ -103,7 +103,7 @@ public class CreateTimeline extends Application {
 				
 				/*converting localdate-> yyyy/mm/dd to date-> dd/mm/yyyy calculating the days between them and starting the 
 				 timelineview class*/
-				TimelineView tm = new TimelineView();
+				
 
 				
 				 Calendar cal1 = new GregorianCalendar();
@@ -111,6 +111,9 @@ public class CreateTimeline extends Application {
 
 				 Date date = java.sql.Date.valueOf(start);
 				 Date date2 = java.sql.Date.valueOf(end);
+				 
+				 TimelineView tm = new TimelineView(tlt,date,date2,des); 
+				 
 				 
 				 
 				 cal1.setTime(date);

@@ -18,6 +18,7 @@ public class Timeline {
 		this.startTime = new SimpleStringProperty(sTime);
 		this.endTime = new SimpleStringProperty(eTime);
 		this.description = new SimpleStringProperty(des);
+		
 	}
 	/*
 	 * }
@@ -30,7 +31,7 @@ public class Timeline {
 	 * 
 	 * }
 	 */
-
+  
 	public String getTitle() {
 		return title.get();
 

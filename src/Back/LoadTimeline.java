@@ -1,11 +1,13 @@
 package Back;
 
 import java.sql.SQLException;
+
+import Front.TimelineView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
- import   java.util.Date;
+import java.util.Date;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -206,7 +208,9 @@ public class LoadTimeline extends Application {
             	String date1 =   tm.getStartDate();
             	String date2 =   tm.getEndDate();
             	
-            
+            	
+            	
+            	
             	 Calendar cal1 = new GregorianCalendar();
                  Calendar cal2 = new GregorianCalendar();
 
@@ -214,12 +218,14 @@ public class LoadTimeline extends Application {
 
                  Date date = sdf.parse(date1);
                  cal1.setTime(date);
+                 TimelineView.firstdate = date;
+                 
                  date = sdf.parse(date2);
                  cal2.setTime(date);
-
-                 
+                 TimelineView.lastdate = date;
+                  
             	  
-                 TimelineView.daysnumber = daysBetween(cal1.getTime(),cal2.getTime());
+                  TimelineView.daysnumber = daysBetween(cal1.getTime(),cal2.getTime());
             	  TimelineView event = new TimelineView();
 
       		
