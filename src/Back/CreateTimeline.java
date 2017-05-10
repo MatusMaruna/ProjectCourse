@@ -1,9 +1,14 @@
 package Back;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-
 import Front.TimelineView;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import Back.LoadTimeline;
 import Back.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -50,8 +55,8 @@ public class CreateTimeline extends Application {
 		/* Grid with title and description*/
 		GridPane grid = new GridPane();
 		grid.setHgap(20);
-	   	grid.setVgap(10);
-	    	grid.setPadding(new Insets(10, 0, 0, 80));
+	    grid.setVgap(10);
+	    grid.setPadding(new Insets(10, 0, 0, 80));
 		final TextField title = new TextField();
 		title.setPromptText("Title");
 		title.setAlignment(Pos.BASELINE_LEFT);
@@ -67,18 +72,18 @@ public class CreateTimeline extends Application {
 		
 		/* Datepicker */
 		DatePicker startDatePicker = new DatePicker();
-	    	DatePicker endDatePicker = new DatePicker();
+	    DatePicker endDatePicker = new DatePicker();
 	    
-	    	startDatePicker.setValue(LocalDate.now());
-	   	endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
+	    startDatePicker.setValue(LocalDate.now());
+	    endDatePicker.setValue(startDatePicker.getValue().plusDays(1));
 
-	    	grid.add(new Label("Start Date:"), 0, 3);
-	    	GridPane.setConstraints(startDatePicker, 0, 4);
-	    	grid.getChildren().add(startDatePicker);
+	    grid.add(new Label("Start Date:"), 0, 3);
+	    GridPane.setConstraints(startDatePicker, 0, 4);
+	    grid.getChildren().add(startDatePicker);
 	    
-	    	grid.add(new Label("End Date:"), 0, 5);
-	   	GridPane.setConstraints(endDatePicker, 0, 6);
-	    	grid.getChildren().add(endDatePicker);
+	    grid.add(new Label("End Date:"), 0, 5);
+	    GridPane.setConstraints(endDatePicker, 0, 6);
+	    grid.getChildren().add(endDatePicker);
 	    
 		
 		buttns.getChildren().addAll (grid, createTimeline,cancelTimeline); 
@@ -86,18 +91,47 @@ public class CreateTimeline extends Application {
 		Scene scene = new Scene(root, 300, 300);
 		
 		/* Here is what the buttons will do */
-		createTimeline.setOnAction(new EventHandler<ActionEvent>(){			
+		createTimeline.setOnAction(new EventHandler<ActionEvent>(){
+			
 			@Override 
 			public void handle(ActionEvent event) { 
-			des= description.getText(); 
-			tlt = title.getText(); 
-			start = startDatePicker.getValue(); 
-			end = endDatePicker.getValue(); 
-			//Timeline line = new Timeline(tlt,start,end,des); 
-			//System.out.println(line.toString());
-			TimelineView view = new TimelineView(); 
-			view.start(primaryStage);
-			primaryStage.show();  
+				des= description.getText(); 
+				tlt = title.getText(); 
+				start = startDatePicker.getValue(); 
+				end = endDatePicker.getValue(); 
+				//Timeline line = new Timeline(tlt,start,end,des); 
+				//System.out.println(line.toString());  
+				
+				
+				/*converting localdate-> yyyy/mm/dd to date-> dd/mm/yyyy calculating the days between them and starting the 
+				 timelineview class*/
+				
+
+				
+				 Calendar cal1 = new GregorianCalendar();
+				 Calendar cal2 = new GregorianCalendar();
+
+				 Date date = java.sql.Date.valueOf(start);
+				 Date date2 = java.sql.Date.valueOf(end);
+				 
+				 TimelineView tm = new TimelineView(tlt,date,date2,des); 
+				 
+				 
+				 
+				 cal1.setTime(date);
+				 TimelineView.firstdate = date;
+				 
+      
+				 cal2.setTime(date2);
+				 TimelineView.lastdate = date2;
+				 
+				 LoadTimeline ld = new LoadTimeline();
+				  
+				  TimelineView.daysnumber = ld.daysBetween(cal1.getTime(),cal2.getTime());
+				  
+				tm.start(primaryStage);
+				primaryStage.show();
+
 			}
 		});
 		cancelTimeline.setOnAction(new EventHandler<ActionEvent>(){

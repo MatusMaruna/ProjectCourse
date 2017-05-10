@@ -133,8 +133,9 @@ public class LoadTimeline extends Application {
 		editimeline.setPadding(new Insets(10, 10, 10, 10));
 
 		editimeline.setOnAction(e -> {
-
-			EditTimeline timeline = new EditTimeline();
+			  Event tm = AddEvent.table.getSelectionModel().getSelectedItem();
+			  
+			EditTimeline timeline = new EditTimeline(tm.getName());
 
 			try {
 				timeline.start(stage);
@@ -209,27 +210,33 @@ public class LoadTimeline extends Application {
             	String date2 =   tm.getEndDate();
             	
             	
-            	
-            	
+	             //System.out.println(line.toString());  
+				
+				
+				/*Creating a Timeline object for the timeline that would be choosen from the list so we can manipulate
+				  that timeline. F.e: EditTimeline or Save a timeline 
+ 				 Also converting localdate-> yyyy/mm/dd to date-> dd/mm/yyyy calculating the days between them and starting the 
+				 timelineview class*/
+				
             	 Calendar cal1 = new GregorianCalendar();
                  Calendar cal2 = new GregorianCalendar();
 
                  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-                 Date date = sdf.parse(date1);
-                 cal1.setTime(date);
-                 TimelineView.firstdate = date;
+                 Date Startdate = sdf.parse(date1);
+                 cal1.setTime(Startdate);
+                 TimelineView.firstdate = Startdate;
                  
-                 date = sdf.parse(date2);
-                 cal2.setTime(date);
-                 TimelineView.lastdate = date;
+                 Date Enddate = sdf.parse(date2);
+                 cal2.setTime(Enddate);
+                 TimelineView.lastdate = Enddate;
                   
             	  
                   TimelineView.daysnumber = daysBetween(cal1.getTime(),cal2.getTime());
-            	  TimelineView event = new TimelineView();
+            	  TimelineView event = new TimelineView(tm.getName(),Startdate,Enddate,tm.getDescription());
 
       		
-      				event.start(stage);
+      			 event.start(stage);
       				
       				stage.show();
           			stage.setTitle(tm.getName());

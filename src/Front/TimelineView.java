@@ -29,7 +29,7 @@ import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 
 
-
+import Back.EditTimeline;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -89,8 +89,8 @@ public class TimelineView extends Application{
 		GridPane buttons = new GridPane();
 		
 		System.out.println("Days= "+daysnumber);
-		
-		
+		System.out.println(title);
+		String editname = title;
 		
 		/* Buttons with attributes*/
 		Button addEvent = new Button("Add Event"); 
@@ -210,9 +210,9 @@ public class TimelineView extends Application{
     	
         
     	editTimeline.setOnAction(e -> {
-
-			EditTimeline event = new EditTimeline();
-
+          
+			EditTimeline event = new EditTimeline(editname);
+           
 			try {
 				event.start(primaryStage);
 			} catch (Exception e1) {
@@ -234,7 +234,7 @@ public class TimelineView extends Application{
     	    	String query = "INSERT INTO TimeLine (Title, Description, StartDate, EndDate) VALUES (?,?,?,?)";
     	    	 Connection con = Sqlconnection.DbConnector();
     	         PreparedStatement pre = con.prepareStatement(query);
-    			
+    			System.out.println(title+"ti ston poutso");
     			pre.setString(1, title);
     			pre.setString(2, dis);
 

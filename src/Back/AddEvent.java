@@ -280,11 +280,11 @@ public class AddEvent extends Application {
 		data.clear();
 
 		try {
-			String sql = "select * from SaveEvent ";
+			String sql = "select * from Timeline ";
 			pre = con.prepareStatement(sql);
 			result = pre.executeQuery();
 			while (result.next()) {
-				data.add(new Event(result.getString("Name"), result.getString("Description"),
+				data.add(new Event(result.getString("Title"), result.getString("Description"),
 
 						result.getString("StartDate"), result.getString("EndDate")));
 

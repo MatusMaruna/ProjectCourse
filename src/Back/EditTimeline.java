@@ -1,6 +1,18 @@
 package Back;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import Front.TimelineView;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,8 +30,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage; 
 
 public class EditTimeline extends Application {
+	
+	public String theName;
+	public  EditTimeline(String s){
+		this.theName = s;
+		System.out.println(s);
+	}
+	
 	@Override
-	public void start(Stage primaryStage){ 
+	public void start(Stage primaryStage) throws SQLException{ 
+		
+		Connection con = Sqlconnection.DbConnector();
+		
 		Button submitToTimeline = new Button("Submit"); 
 		Button deleteEvent = new Button("Delete");
 		Button cancelEvent = new Button("Cancel");
@@ -60,7 +82,7 @@ public class EditTimeline extends Application {
 		
 		
 		/* Datepicker */
-		DatePicker startDatePicker = new DatePicker();
+	    	DatePicker startDatePicker = new DatePicker();
 	    	DatePicker endDatePicker = new DatePicker();
 	    
 	    	startDatePicker.setValue(LocalDate.now());
@@ -80,16 +102,39 @@ public class EditTimeline extends Application {
 		Scene scene = new Scene(root, 300, 300);
 		
 		/* Here is what the buttons will do */
-		submitToTimeline.setOnAction(new EventHandler<ActionEvent>(){	
-			@Override 
-			public void handle(ActionEvent event) { 
-			Label label = new Label("Add new Timeline script here");
-			label.setTextFill(Color.RED);
-			buttns.getChildren().clear(); 
-			buttns.getChildren().addAll(label);
-			primaryStage.show(); 
-			}
-		});
+		submitToTimeline.setOnAction(	e -> {	
+		
+	    		try {
+	    	    	String query =  "UPDATE TimeLine  SET Title = ?, Description = ?, StartDate = ?, EndDate = ? WHERE Title ='"+theName+"'";
+	    	    	PreparedStatement pre = con.prepareStatement(query);
+	    	    	
+	    	   
+	    	    	
+	            	System.out.println(theName);
+	    	        
+	                 
+	    	        
+	    			pre.setString(1, title.getText());
+	    			pre.setString(2, description.getText());
+
+	    			pre.setString(3, "12/04/2017");
+	                pre.setString(4, "12/05/2017");
+	    		 
+	    			pre.execute();
+	    			pre.close();
+	    			//System.out.println(endDatePicker.toString());
+	    			System.out.println("Saved");
+	    			
+	    		} catch (SQLException e1) {
+	    			// TODO Auto-generated catch block
+	    			e1.printStackTrace();
+	    		} /*catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/
+				
+			}); 
+	        
 		
 		deleteEvent.setOnAction(new EventHandler<ActionEvent>(){
 			@Override 
@@ -119,6 +164,9 @@ public class EditTimeline extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show(); 
 	}
+	
+	
+	
 	public static void main(String[] args) {
 		launch(args); 
 	}
