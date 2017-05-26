@@ -270,7 +270,7 @@ public class AddEvent extends Application {
 							pre.close();
 							ClearFields();
 							refreshTable();
-							durational = new CheckBox("Is durational ?"); 
+							durational = new CheckBox("Is non-durational ?"); 
 						}
 					} catch (SQLException e1) {
 						e1.printStackTrace();

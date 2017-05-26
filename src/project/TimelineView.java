@@ -50,7 +50,7 @@ public class TimelineView extends Application {
 	public Timeline tm;
 	public Event event;
 	public ArrayList<Event> events = new ArrayList<Event>();
-	private String[] weekdays = { "Sun." , "Mon." , "Tues." , "Wed." , "Thur." , "Fri." , "Sat."};
+	private String[] weekdays = { "Sun." , "Mon." , "Tue." , "Wed." , "Thu." , "Fri." , "Sat."};
 
 	private Color[] color = { Color.BLUE, Color.RED, Color.AQUA, Color.YELLOW, Color.PURPLE, Color.HOTPINK };
 
