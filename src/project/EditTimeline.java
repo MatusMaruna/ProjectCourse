@@ -63,16 +63,18 @@ public class EditTimeline extends Application {
 		try 
 		{
 			
-		    String sql = "SELECT * FROM TimeLine WHERE Title ='"+ theName+"'";
+		    String sql = "SELECT * FROM TimeLine";
 		    PreparedStatement pre1 = con.prepareStatement(sql);
 		    ResultSet result = pre1.executeQuery();
 		    while (result.next())
 		    {
-		    	tm = new Timeline(result.getRow(), result.getString("Title"), result.getString("Description"),
+		    	Timeline tom = new Timeline(result.getRow(), result.getString("Title"), result.getString("Description"),
 							result.getString("StartDate"), result.getString("EndDate"));  
-			    
+			    if(result.getString("Title").equals(theName)){
 			        this.TimeID = result.getRow();   
-				    this.dis = tm.getDescription();
+				    System.out.println(TimeID);
+				    this.tm = tom;
+			    }
 		    }
 		    
 		    result.close();
