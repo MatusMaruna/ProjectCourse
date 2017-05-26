@@ -73,7 +73,7 @@ public class AddEvent extends Application {
 	static Button update;
 	static Label dur; 
 	static Label startDate = new Label("Start Date"); 
-	CheckBox durational = new CheckBox("Is durational? ");
+	CheckBox durational = new CheckBox("Is non-durational? ");
 
 	private Boolean pass;
 	

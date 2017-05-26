@@ -77,7 +77,7 @@ public class EditEvent extends Application {
   public File file;
   private String theName;
   private TextField name = new TextField();
-  private CheckBox durational = new CheckBox("Is durational?"); 
+  private CheckBox durational = new CheckBox("Is non-durational?"); 
   
   private void setname(String s){
 	   this.theName = s;
