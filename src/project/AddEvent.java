@@ -128,7 +128,6 @@ public class AddEvent extends Application {
 		address.setPromptText("File Path");
 		address.setPrefSize(170, 10);
 		address.setEditable(false);
-		address.setMaxWidth(300);
 
 		sdate = new DatePicker();
 		sdate.setPromptText("Date");

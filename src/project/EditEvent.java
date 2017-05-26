@@ -77,7 +77,7 @@ public class EditEvent extends Application {
   public File file;
   private String theName;
   private TextField name = new TextField();
-  private CheckBox durational = new CheckBox("Is non-durational?"); 
+  private CheckBox durational = new CheckBox("Non-durational"); 
   
   private void setname(String s){
 	   this.theName = s;
@@ -96,7 +96,7 @@ public class EditEvent extends Application {
 		Connection con = Sqlconnection.DbConnector();
 		
 		name.setPromptText("Title");
-		name.setMaxWidth(300);
+		name.setMaxWidth(200);
         setname(name.getText());	
 		String sql = "SELECT* FROM SaveEvent WHERE Id='"+ ID + "'";
 		try {
@@ -120,21 +120,23 @@ public class EditEvent extends Application {
 		
 		TextArea description = new TextArea();
 		description.setPromptText("Description");
-		description.setPrefSize(285, 100);
+		description.setPrefSize(200, 100);
+		description.setMaxWidth(200);
 
 		
 		TextField address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(100, 10);
+		address.setPrefSize(165, 10);
 		address.setEditable(false);
-		address.setMaxWidth(300);
+
 
 		DatePicker sdate = new DatePicker();
 		sdate.setPromptText("Date");
+		sdate.setMaxWidth(200);
 
 		DatePicker edate = new DatePicker();
 		edate.setPromptText("Date");
-		edate.setMaxHeight(100);
+		edate.setMaxWidth(200);
 		
 		durational.setOnAction(e-> {
 			if(durational.isSelected() == true){ 
@@ -146,11 +148,11 @@ public class EditEvent extends Application {
 		});
 
 		ComboBox<String> combox = new ComboBox<String>();
-		combox.setMaxWidth(120);
+		combox.setMaxWidth(200);
 		combox.setPrefHeight(25);
-		combox.setPadding(new Insets(6, 10, 6, 10));
-		combox.setPromptText("Edit Event");
-		combox.setStyle("-fx-font: 10px \"Font\";");
+		combox.setMinHeight(25);
+		combox.setPromptText("Select Event");
+		combox.setStyle("-fx-font: 11px \"Font\";");
 		combox.setItems(options);		
 		combox.setOnAction(e -> {
 		    setname(combox.getSelectionModel().getSelectedItem().toString()); 
@@ -166,11 +168,11 @@ public class EditEvent extends Application {
 		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*text"),
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		Button browse = new Button("Upload");
-		browse.setPrefWidth(85);
+		Button browse = new Button("hej");
+		browse.setPrefWidth(25);
 		browse.setPrefHeight(25);
-		browse.setFont(new Font(10));
-		browse.setPadding(new Insets(10, 10, 10, 10));
+		browse.setMinHeight(25);
+		browse.setFont(new Font(11));
 		browse.setOnAction(e -> {
 
 			file = filechooser.showOpenDialog(primaryStage);
@@ -189,10 +191,10 @@ public class EditEvent extends Application {
 		});
 
 		Button update = new Button("Update");
-		update.setPrefWidth(85);
+		update.setPrefWidth(60);
 		update.setPrefHeight(25);
-		update.setFont(new Font(10));
-		update.setPadding(new Insets(10, 10, 10, 10));
+		update.setMinHeight(25);
+		update.setFont(new Font(11));
 		update.setOnAction(e -> {
 			if ( name.getText().isEmpty() 
 					|| sdate.getEditor().getText().isEmpty() || edate.getEditor().getText().isEmpty()
@@ -315,10 +317,10 @@ public class EditEvent extends Application {
 		}); 
 	
 		Button cancelEvent = new Button("Cancel");
-		cancelEvent.setPrefWidth(85);
+		cancelEvent.setPrefWidth(60);
 		cancelEvent.setPrefHeight(25);
-		cancelEvent.setFont(new Font(10));
-		cancelEvent.setPadding(new Insets(10, 10, 10, 10));
+		cancelEvent.setMinHeight(25);
+		cancelEvent.setFont(new Font(11));
 		cancelEvent.setOnAction(e -> {	  
 			LoadTimeline ctl = new LoadTimeline();
 			try {
@@ -332,10 +334,10 @@ public class EditEvent extends Application {
 
 		BorderPane borderP = new BorderPane();
 		Button delete = new Button("Delete");
-		delete.setPrefWidth(85);
+		delete.setPrefWidth(60);
 		delete.setPrefHeight(25);
-		delete.setFont(new Font(10));
-		delete.setPadding(new Insets(10, 10, 10, 10));
+		delete.setMinHeight(25);
+		delete.setFont(new Font(11));
 		delete.setOnAction(e -> {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Confrimation");
@@ -374,45 +376,30 @@ public class EditEvent extends Application {
 			 
 		});
 
-		GridPane grigp = new GridPane();
-		grigp.add(name, 0, 1);
-		grigp.add(durational, 0, 2);
-		grigp.add(new Label("Description:"), 0, 3);
-		GridPane.setConstraints(description, 0, 4);
-		grigp.getChildren().add(description);
-
-		grigp.setAlignment(Pos.CENTER);
-
-		grigp.add(address, 0, 5);
-		grigp.add(browse, 1, 5);
-		grigp.setVgap(10);
-		grigp.setHgap(10);
-
 		Label startDate = new Label("Start Date");
-		sdate.setPadding(new Insets(7, 7, 7, 7));
 		sdate.setValue(LocalDate.now());
 		Label endDate = new Label("End Date");
 		endDate.setAlignment(Pos.CENTER);
-
-		edate.setPadding(new Insets(7, 7, 7, 7));
 		edate.setValue(LocalDate.now());
+		
 		HBox hb = new HBox();
-		hb.getChildren().addAll(combox,update, delete, cancelEvent);
-		hb.setSpacing(5);
+		hb.getChildren().addAll(update, delete, cancelEvent);
+		hb.setSpacing(10);
+		hb.setAlignment(Pos.CENTER);
+		
+		HBox hb1 = new HBox();
+		hb1.getChildren().addAll(address, browse);
+		hb1.setSpacing(10);
+		hb1.setAlignment(Pos.CENTER);
 
 		VBox vbox = new VBox();
-		vbox.getChildren().addAll(startDate, sdate, endDate, edate);
+		vbox.getChildren().addAll(combox, name, description, hb1 ,startDate, sdate, endDate, edate, hb);
 		vbox.setSpacing(10);
 		vbox.setAlignment(Pos.CENTER);
 
-		VBox vb = new VBox();
-		vb.setAlignment(Pos.CENTER);
-		vb.getChildren().addAll(grigp, vbox, hb);
-
-		vb.setSpacing(10);
-		borderP.setLeft(vb);
-		borderP.setPadding(new Insets(10, 10, 10, 40));
-		Scene scene = new Scene(borderP, 450, 500, Color.rgb(200, 139, 128));
+		Scene scene = new Scene(vbox, 325, 450);
+		scene.getStylesheets().add("project/application.css");
+		primaryStage.setTitle("Edit Event");
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
