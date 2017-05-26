@@ -1,5 +1,6 @@
 package project;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -161,9 +162,9 @@ public class TimelineView extends Application {
 		editTimeline.setMinWidth(Region.USE_PREF_SIZE);
 
 		/* The background of the buttons */
-		Rectangle backgroundButtons = new Rectangle(120, 125);
+		Rectangle backgroundButtons = new Rectangle(120, 110);
 		GridPane.setConstraints(backgroundButtons, 24, 0, 29, 5, HPos.RIGHT, VPos.TOP);
-		backgroundButtons.setFill(Color.WHITE);
+		backgroundButtons.setFill(Color.BLACK);
 		backgroundButtons.setStroke(Color.BLACK);
 		backgroundButtons.setStrokeWidth(1);
 
@@ -171,7 +172,7 @@ public class TimelineView extends Application {
 		ScrollPane sp = new ScrollPane();
 		sp.setHbarPolicy(ScrollBarPolicy.ALWAYS);
 		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-
+        
 		sp.setContent(buttons);
 		sp.setFitToWidth(true);
 		sp.setFitToHeight(true);
@@ -460,17 +461,18 @@ public class TimelineView extends Application {
 		buttons.setStyle("-fx-background-color:  #000000;");
 		buttons.setHgap(5);
 		buttons.setVgap(10);
-		
+		backgroundButtons.setStyle("-fx-background-color: red;");
 		hb.setAlignment(Pos.TOP_RIGHT);
-		sp.setStyle("-fx-background-color:  #FFFFFF;");
-		hb.getChildren().addAll(homeBut);
-		hb.setPadding(new Insets(10, 10, 10, 10));
+		sp.setStyle("-fx-background-color:  blue;");
 		
-		vbox.setPadding(new Insets(10, 10, 10, 10));
+		hb.getChildren().addAll(homeBut);
+		hb.setPadding(new Insets(20, 10, 10, 10));
+		
+		vbox.setPadding(new Insets(10, 20, 20, 20));
 		gp.getChildren().addAll(backgroundButtons, addEvent, editEvent, editTimeline);
 
 		vbox.getChildren().addAll(gp, hb, buttons, sp);
-		vbox.setStyle("-fx-background-color:  #FFFFFF;");
+		vbox.setStyle("-fx-background-color: lightgrey;");
 		/* Displaying the stage */
 		Scene scene = new Scene(vbox, 1200, 700);
 		primaryStage.setTitle("Timeline View");
@@ -509,3 +511,4 @@ public class TimelineView extends Application {
 		return dates;
 	}
 }
+
