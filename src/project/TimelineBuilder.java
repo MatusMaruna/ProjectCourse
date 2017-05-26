@@ -48,7 +48,7 @@ public class TimelineBuilder extends Application {
 		nwTimeline.setPadding(new Insets(10, 10, 10, 10));
 	
 
-		AddEvent.load = new Button("load Timeline");
+		AddEvent.load = new Button("Load Timeline");
 		AddEvent.load.setPadding(new Insets(10, 10, 10, 10));
 		AddEvent.load.setOnAction(e -> {
 
