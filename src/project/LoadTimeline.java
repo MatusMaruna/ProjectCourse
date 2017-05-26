@@ -56,12 +56,13 @@ public class LoadTimeline extends Application {
 		GridPane gp = new GridPane();
 		CheckConection();
 		Scene scene = new Scene(gp, 700, 500, Color.rgb(200, 19, 128));
+		
 
 		stage.setScene(scene);
 		stage.show();
-		stage.setTitle("Timeline with Events");
+		stage.setTitle("Load Timeline");
 		VBox root = new VBox();
-		root.setStyle("-fx-background-color: LIGHTGREY");
+		//root.setStyle("-fx-background-color: LIGHTGREY");
 		root.setSpacing(10);
 
 
@@ -105,7 +106,7 @@ public class LoadTimeline extends Application {
 		BorderPane borderP = new BorderPane();
 		
 		Button editimeline = new Button("Edit Timeline");
-		editimeline.setFont(new Font(10));
+		editimeline.setFont(new Font(11));
 		editimeline.setPadding(new Insets(10, 10, 10, 10));
 		editimeline.setPrefWidth(85);
 		editimeline.setPrefHeight(25);
@@ -137,7 +138,7 @@ public class LoadTimeline extends Application {
 		});
 
 		Button addevent = new Button("Add Event");
-		addevent.setFont(new Font(10));
+		addevent.setFont(new Font(11));
 		addevent.setPadding(new Insets(10, 10, 10, 10));
 		addevent.setPrefWidth(85);
 		addevent.setPrefHeight(25);
@@ -178,7 +179,7 @@ public class LoadTimeline extends Application {
 		});
 
 		Button exit = new Button("New Timeline");
-		exit.setFont(new Font(10));
+		exit.setFont(new Font(11));
 		exit.setPadding(new Insets(10, 10, 10, 10));
 		exit.setPrefWidth(85);
 		exit.setPrefHeight(25);
@@ -198,7 +199,7 @@ public class LoadTimeline extends Application {
 		});
 
 		Button editevent = new Button("Edit Event");
-		editevent.setFont(new Font(10));
+		editevent.setFont(new Font(11));
 		editevent.setPadding(new Insets(10, 10, 10, 10));
 		editevent.setPrefWidth(85);
 		editevent.setPrefHeight(25);
@@ -236,7 +237,7 @@ public class LoadTimeline extends Application {
 		});
 		
 		Button viewTimeline = new Button("View Timeline");
-		viewTimeline.setFont(new Font(10));
+		viewTimeline.setFont(new Font(11));
 		viewTimeline.setPadding(new Insets(10, 10, 10, 10));
 		viewTimeline.setPrefWidth(85);
 		viewTimeline.setPrefHeight(25);
@@ -297,7 +298,7 @@ public class LoadTimeline extends Application {
 		Button deleteTimeline = new Button("Delete");
 		deleteTimeline.setPrefWidth(85);
 		deleteTimeline.setPrefHeight(25);
-		deleteTimeline.setFont(new Font(10));
+		deleteTimeline.setFont(new Font(11));
 		deleteTimeline.setPadding(new Insets(10,10,10,10));
 		deleteTimeline.setOnAction(e -> {
 		
@@ -345,21 +346,24 @@ public class LoadTimeline extends Application {
 		
 		VBox vbox = new VBox();
 	
-		vbox.setStyle("-fx-background-color:  #FFFFFF;");
+		//vbox.setStyle("-fx-background-color:  #FFFFFF;");
 		vbox.getChildren().addAll(addevent, editevent ,editimeline ,deleteTimeline, viewTimeline,exit );
 		vbox.setSpacing(20);
 		vbox.setMaxWidth(100); 
 		vbox.setPadding(new Insets(0, 10, 0, 0));
+		vbox.setId("vbox");
 
 		borderP.setPadding(new Insets(20, 20, 20, 10));
 		Scene scene1 = new Scene(borderP, 500, 500, Color.rgb(200, 139, 128));
+		scene1.getStylesheets().add("project/application.css");
 
 		stage.setScene(scene1);
 		stage.show();
 		
-		borderP.setStyle("-fx-background-color:  #FFFFFF;");
+		//borderP.setStyle("-fx-background-color:  #FFFFFF;");
 		borderP.setLeft(vbox);
 		borderP.setCenter(table);
+		borderP.setId("borderP");
 
 	}
 

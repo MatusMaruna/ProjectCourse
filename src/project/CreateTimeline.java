@@ -47,7 +47,7 @@ public class CreateTimeline extends Application {
 		
 		/*Playing around with Positioning*/
 		VBox root = new VBox(); 
-		root.setStyle("-fx-background-color: LIGHTGREY");
+		//root.setStyle("-fx-background-color: LIGHTGREY");
 		root.setSpacing(10);
 
 		/* Pane Positioning to get buttons beside each other */
@@ -98,6 +98,7 @@ public class CreateTimeline extends Application {
 		
 		root.getChildren().addAll(buttns); 
 		Scene scene = new Scene(root, 300, 300);
+		scene.getStylesheets().add("project/application.css");
 		
 		/* Here is what the buttons will do */
 		createTimeline.setOnAction(new EventHandler<ActionEvent>(){

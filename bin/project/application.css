@@ -5,9 +5,25 @@
 	
 	-fx-padding: 6 6 6 6;
 	-fx-border-radius: 8;
+	-fx-background-color: #91AA9D;
 }
 
 .root {
- -fx-background-color: white;
+ 	-fx-background-color: #3E606F;
 
+}
+
+#TimelineBuilder{
+	-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+	-fx-fill: #D1DBBD;
+	-fx-font-size: 30px;
+	-fx-font-weight: bold;
+}
+
+#borderP {
+	-fx-background-color: #3E606F;
+}
+
+#vbox {
+	-fx-background-color: #3E606F;
 }

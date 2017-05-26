@@ -73,7 +73,7 @@ public class AddEvent extends Application {
 	static Button update;
 	static Label dur; 
 	static Label startDate = new Label("Start Date"); 
-	CheckBox durational = new CheckBox("Is non-durational? ");
+	CheckBox durational = new CheckBox("Non-durational");
 
 	private Boolean pass;
 	
@@ -116,22 +116,17 @@ public class AddEvent extends Application {
 		});
 		name = new TextField();
 		name.setPromptText("Title");
-		name.setMaxWidth(300);
+		name.setMaxWidth(200);
 
 		description = new TextArea();
 		description.setPromptText("Description ");
-		description.setPrefSize(285, 100);
+		description.setMaxWidth(200);
+		description.setMaxHeight(100);
+		
 
 		address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(100, 10);
-		address.setEditable(false);
-		address.setMaxWidth(300);
-		
-		
-		address = new TextField();
-		address.setPromptText("File Path");
-		address.setPrefSize(100, 10);
+		address.setPrefSize(170, 10);
 		address.setEditable(false);
 		address.setMaxWidth(300);
 
@@ -151,7 +146,7 @@ public class AddEvent extends Application {
 		saveButton = new Button("Save");
 		saveButton.setPrefWidth(85);
 		saveButton.setPrefHeight(25);
-		saveButton.setFont(new Font(10));
+		saveButton.setFont(new Font(11));
 		saveButton.setPadding(new Insets(10, 10, 10, 10));
 		saveButton.setOnAction(e -> {
 			if ( name.getText().isEmpty() || sdate.getEditor().getText().isEmpty() 
@@ -304,11 +299,12 @@ public class AddEvent extends Application {
 		filechooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		browse = new Button("Upload");
-		browse.setPrefWidth(85);
+		browse = new Button("...");
+		browse.setPrefWidth(10);
 		browse.setPrefHeight(25);
 		browse.setFont(new Font(10));
-		browse.setPadding(new Insets(10, 10, 10, 10));
+		browse.setMinHeight(25);
+		//browse.setPadding(new Insets(10, 10, 10, 10));
 		browse.setOnAction(e -> {
 			file = filechooser.showOpenDialog(primaryStage);
 			if (file != null) {
@@ -357,7 +353,7 @@ public class AddEvent extends Application {
 		Button cancelButton = new Button("Cancel");
 		cancelButton.setPrefWidth(85);
 		cancelButton.setPrefHeight(25);
-		cancelButton.setFont(new Font(10));
+		cancelButton.setFont(new Font(11));
 		cancelButton.setPadding(new Insets(10, 10, 10, 10));
 		cancelButton.setOnAction(e -> {	
 			LoadTimeline ctl = new LoadTimeline();
@@ -369,51 +365,48 @@ public class AddEvent extends Application {
 			}
 			primaryStage.show();
 		});
-		borderP.setCenter(table);
+		borderP.setRight(table);
 		borderP.setPadding(new Insets(20, 20, 20, 20));
-
+		
+		HBox hb1 = new HBox();
+		hb1.getChildren().addAll(AddEvent.address, AddEvent.browse);	
+		
+		
 		GridPane grigp = new GridPane();
-		grigp.add(name, 0, 1);
-		grigp.setVgap(10); 
-		grigp.add(durational,0,2); 
-		grigp.setVgap(10);
-		grigp.add(new Label("Description:"), 0, 3);
-
-		GridPane.setConstraints(description, 0, 4);
-		grigp.getChildren().add(description);
-
 		grigp.setAlignment(Pos.CENTER);
-
 		grigp.add(AddEvent.address, 0, 5);
 		grigp.add(AddEvent.browse, 1, 5);
-		grigp.setVgap(10);
+		grigp.setPadding(new Insets(10, 10, 10, 10));
 		grigp.setHgap(10);
 
-		sdate.setPadding(new Insets(7, 7, 7, 7));
 		sdate.setValue(LocalDate.now());
 		Label endDate = new Label("End Date");
 		endDate.setAlignment(Pos.CENTER);
 
-		edate.setPadding(new Insets(7, 7, 7, 7));
 		edate.setValue(LocalDate.now());
 		
 		HBox hb = new HBox();
 		hb.getChildren().addAll(saveButton, cancelButton);
 		hb.setSpacing(50);
 		hb.setAlignment(Pos.BOTTOM_CENTER);
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(startDate, sdate, endDate, edate);
-		vbox.setSpacing(10);
-		vbox.setAlignment(Pos.CENTER);
+		hb.setPadding(new Insets(10, 10, 10, 10));
+		
 
-		VBox vb = new VBox();
-		vb.setAlignment(Pos.CENTER);
-		vb.getChildren().addAll(grigp, vbox, hb);
+		VBox vb1 = new VBox();
+		vb1.getChildren().addAll(name, durational, description, grigp, startDate, sdate, endDate, edate, hb);
+		vb1.setAlignment(Pos.CENTER);
+		vb1.setSpacing(10);
+		
+		HBox hb2 = new HBox();
+		hb2.getChildren().addAll(vb1, table);
+		hb2.setSpacing(10);
+		hb2.setPadding(new Insets(10, 10, 10, 10));
 
-		vb.setSpacing(30);
-		borderP.setLeft(vb);
+		
+		
 		borderP.setPadding(new Insets(10, 10, 10, 40));
-		Scene scene = new Scene(borderP, 750, 500, Color.rgb(200, 139, 128));
+		Scene scene = new Scene(hb2, 610, 500);
+		scene.getStylesheets().add("project/application.css");
 		refreshTable();
 		primaryStage.setScene(scene);
 		primaryStage.show();

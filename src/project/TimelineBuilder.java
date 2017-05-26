@@ -35,10 +35,11 @@ public class TimelineBuilder extends Application {
 		header.setEffect(ds);
 		header.setCache(true);
 		header.setFont(Font.font(20));
+		header.setId("TimelineBuilder");
 
 		/* Playing around with Positioning */
 		VBox root = new VBox();
-		root.setStyle("-fx-background-color: LIGHTGREY");
+		//root.setStyle("-fx-background-color: LIGHTGREY");
 		VBox buttns = new VBox();
 		root.setAlignment(Pos.CENTER);
 		buttns.setAlignment(Pos.CENTER);
@@ -66,6 +67,7 @@ public class TimelineBuilder extends Application {
 		buttns.getChildren().addAll(header, nwTimeline, AddEvent.load);
 		root.getChildren().add(buttns);
 		Scene scene = new Scene(root, 300, 200);
+		scene.getStylesheets().add("project/application.css");
 
 		/* Here is what the buttons will do */
 		nwTimeline.setOnAction(e -> {

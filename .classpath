@@ -4,6 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/moose/Downloads/sqlite-jdbc-3.16.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sandra/Desktop/java_courses/1DV507/ext. jar/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sandra/Desktop/java_courses/1DV507/ext. jar/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Sandra/Downloads/sqlite-jdbc-3.16.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
