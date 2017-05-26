@@ -34,8 +34,8 @@ import project.LoadTimeline;
 import project.Timeline; 
 
 public class CreateTimeline extends Application {
-	String des; 
-	String tlt; 
+	public String des; 
+	public String tlt; 
 	LocalDate start; 
 	LocalDate end; 
 	
