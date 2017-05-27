@@ -99,7 +99,7 @@ public class EditTimeline extends Application {
 		
 		/*Playing around with Positioning*/
 		VBox root = new VBox(); 
-		root.setStyle("-fx-background-color: LIGHTGREY");
+		//root.setStyle("-fx-background-color: LIGHTGREY");
 		root.setSpacing(10);
 
 		/* Pane Positioning to get buttons beside each other */
@@ -150,6 +150,7 @@ public class EditTimeline extends Application {
 		buttns.getChildren().addAll (grid, submit, deleteTimeline, cancel); 
 		root.getChildren().addAll(buttns); 
 		Scene scene = new Scene(root, 300, 300);
+		scene.getStylesheets().add("project/application.css");
 		
 		/* Here is what the buttons will do */
 		submit.setOnAction(	e -> {			
