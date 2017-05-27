@@ -60,16 +60,16 @@ public class EventView extends Application {
 															// selecting the
 															// event
 					title = new Label("Title: " + event.getName());
-					title.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+					title.setFont(Font.font("Verdana", 10));
 					
 					description = new Label("Description: " + event.getDescription());
-					description.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+					description.setFont(Font.font("Verdana", 10));
 					
 					StartTime = new Label("Start Date: " + event.getStartDate());
-					StartTime.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+					StartTime.setFont(Font.font("Verdana", 10));
 					
 					EndTime = new Label("End Date: " + event.getEndDate());
-					EndTime.setFont(Font.font("Verdana", FontWeight.BOLD, 15));
+					EndTime.setFont(Font.font("Verdana", 10));
 
 					
 					if(result.getBinaryStream("Image") != null){
@@ -107,7 +107,7 @@ public class EventView extends Application {
 		}
 
 		root.getChildren().addAll(title, description, StartTime, EndTime);
-		root.setStyle("-fx-background-color:  #FFFFFF;");
+		root.setStyle("-fx-background-color:  #D1DBBD;");
 		borderp.setTop(root);
 		Scene scene = new Scene(borderp, 250, 200);
 		primaryStage.setScene(scene);

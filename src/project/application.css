@@ -6,6 +6,7 @@
 	-fx-padding: 6 6 6 6;
 	-fx-border-radius: 8;
 	-fx-background-color: #91AA9D;
+	-fx-text-fill: #000;
 }
 
 .root {
@@ -26,4 +27,34 @@
 
 #vbox {
 	-fx-background-color: #3E606F;
+}
+
+.scroll-bar:horizontal ,
+.scroll-bar:vertical
+{
+    -fx-background-color:#D1DBBD;
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.increment-button ,.mylistview .decrement-button {
+    -fx-background-color:transparent;
+	-fx-border-color:derive(gray,80%);
+}
+
+/* The main scrollbar **track** CSS class  */
+.scroll-bar:horizontal .track ,
+.scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+	 -fx-border-color:derive(gray,80%);
+	 -fx-background-radius: 0em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #91AA9D;
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 0em;
+
 }

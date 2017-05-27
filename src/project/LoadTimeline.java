@@ -178,7 +178,7 @@ public class LoadTimeline extends Application {
 
 		});
 
-		Button exit = new Button("New Timeline");
+		Button exit = new Button("Cancel");
 		exit.setFont(new Font(11));
 		exit.setPadding(new Insets(10, 10, 10, 10));
 		exit.setPrefWidth(85);

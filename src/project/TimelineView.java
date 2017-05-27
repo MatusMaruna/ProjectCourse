@@ -53,7 +53,7 @@ public class TimelineView extends Application {
 	public ArrayList<Event> events = new ArrayList<Event>();
 	private String[] weekdays = { "Sun." , "Mon." , "Tue." , "Wed." , "Thu." , "Fri." , "Sat."};
 
-	private Color[] color = { Color.BLUE, Color.RED, Color.AQUA, Color.YELLOW, Color.PURPLE, Color.HOTPINK };
+	private Color[] color = { Color.web("#D1DBD4"), Color.web("#8CB2A7"),Color.web("#DAF1D4"), Color.web("#9AB79B")};
 
 	VBox vbox = new VBox();
 	GridPane buttons = new GridPane();
@@ -142,35 +142,22 @@ public class TimelineView extends Application {
 		
 		System.out.println(events.size());
 		/* Buttons get the same size */
-		addEvent.setMaxWidth(Double.MAX_VALUE);
-		editEvent.setMaxWidth(Double.MAX_VALUE);
-		editTimeline.setMaxWidth(Double.MAX_VALUE);
-		homeBut.setMaxWidth(Double.MAX_VALUE);
+		addEvent.setMinWidth(70);
+		editEvent.setMinWidth(70);
+		editTimeline.setMinWidth(70);
+		homeBut.setMinWidth(70);
 
 		/* Position of the buttons */
-		GridPane.setMargin(addEvent, new Insets(5, 5, 5, 5));
-		GridPane.setConstraints(addEvent, 52, 0);
-		GridPane.setMargin(editEvent, new Insets(5, 5, 5, 5));
-		GridPane.setConstraints(editEvent, 52, 1);
-		GridPane.setMargin(editTimeline, new Insets(5, 5, 5, 5));
-		GridPane.setConstraints(editTimeline, 52, 2);
 
+		HBox hb = new HBox();
+		hb.getChildren().addAll(addEvent, editEvent, editTimeline, homeBut);
+		hb.setSpacing(10);
+		hb.setAlignment(Pos.CENTER);
 
-		GridPane.setMargin(homeBut, new Insets(5, 5, 5, 5));
-		GridPane.setConstraints(homeBut, 52, 2);
-
-		editTimeline.setMinWidth(Region.USE_PREF_SIZE);
-
-		/* The background of the buttons */
-		Rectangle backgroundButtons = new Rectangle(120, 110);
-		GridPane.setConstraints(backgroundButtons, 24, 0, 29, 5, HPos.RIGHT, VPos.TOP);
-		backgroundButtons.setFill(Color.BLACK);
-		backgroundButtons.setStroke(Color.BLACK);
-		backgroundButtons.setStrokeWidth(1);
 
 		/* The scroll bar with its property (Will have to change the content) */
 		ScrollPane sp = new ScrollPane();
-		sp.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+		sp.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
         
 		sp.setContent(buttons);
@@ -178,6 +165,8 @@ public class TimelineView extends Application {
 		sp.setFitToHeight(true);
 		sp.setPrefViewportWidth(1000);
 		sp.setPrefViewportHeight(1000);
+		sp.getStyleClass().add("edge-to-edge");
+		//sp.setStyle("fx-background-color: #000000;");
 
 		/*
 		 * storing the Timelines dates inside this array so we will be able to
@@ -244,7 +233,7 @@ public class TimelineView extends Application {
 			/*This part will print the rectangles that represent a date*/
 			Rectangle r1 = new Rectangle(120, 80);
 			r1.strokeLineCapProperty();
-			r1.setFill(Color.DARKORANGE);
+			r1.setFill(Color.web("#D1DBBD"));
 			GridPane.setConstraints(r1, a, 2);
 			
 			
@@ -260,7 +249,7 @@ public class TimelineView extends Application {
         
             Label weekday = new Label();
             weekday.setText("  "+weekdays[theDay]);
-			weekday.setTextFill(Color.DARKORANGE);
+			weekday.setTextFill(Color.web("#D1DBBD"));
 			weekday.setFont(Font.font("Cambria", FontWeight.SEMI_BOLD, 15));
 			theDay ++;
 			GridPane.setConstraints(weekday, a, 1);
@@ -309,7 +298,7 @@ public class TimelineView extends Application {
 				
 				
 				/*This part will print the line that represent the event*/
-				Line ln = new Line(EventStart, possision, EventEnd , possision);
+				Line ln = new Line(EventStart, possision, EventEnd-15 , possision);
 				ln.smoothProperty();
 				ln.setStrokeWidth(15);
                 ln.setStroke(color[thecolor]);
@@ -358,6 +347,13 @@ public class TimelineView extends Application {
 				
 				EventStart = events.get(k).getStartPoint();
 				
+				/*Bar event test*/
+				/*Line r1 = new Line(EventStart, possision, EventStart+105, possision);
+				r1.strokeLineCapProperty();
+				r1.setStrokeWidth(15);
+				r1.setStroke(Color.web("#FCFFF5"));
+				GridPane.setConstraints(r1, EventStart, possision);*/
+				
 				/*Printing the circle*/
 				Circle r1 = new Circle(25);
 				r1.strokeLineCapProperty();
@@ -396,7 +392,6 @@ public class TimelineView extends Application {
 		}
 
 		/* giving functionality to the buttons */
-		addEvent.setTextFill(Color.BLUE);
 		addEvent.setOnAction(e -> {
 
 			AddEvent add = new AddEvent(TimeID,firstdate,lastdate);
@@ -410,7 +405,6 @@ public class TimelineView extends Application {
 			primaryStage.show();
 
 		});
-		editEvent.setTextFill(Color.BLUE);
 		editEvent.setOnAction(e -> {
 
 			EditEvent event = new EditEvent(TimeID,firstdate,lastdate);
@@ -424,7 +418,6 @@ public class TimelineView extends Application {
 			primaryStage.show();
 			primaryStage.setTitle("Edit Event");
 		});
-		editTimeline.setTextFill(Color.BLUE);
 		editTimeline.setOnAction(e -> {
 
 			EditTimeline event = new EditTimeline(editname);
@@ -439,7 +432,7 @@ public class TimelineView extends Application {
 			primaryStage.setTitle("Edit Timeline");
 		});
 
-		homeBut.setTextFill(Color.BLUE);
+
 		homeBut.setOnAction(e -> {
 
 			TimelineBuilder timebult = new TimelineBuilder();
@@ -453,30 +446,24 @@ public class TimelineView extends Application {
 			primaryStage.show();
 
 		});
-
-		GridPane gp = new GridPane();
 	     
-		HBox hb = new HBox();
 		/* Getting the children + just playing around with the colours */
-		buttons.setStyle("-fx-background-color:  #000000;");
+		buttons.setStyle("-fx-background-color:  #3E606F;");
 		buttons.setHgap(5);
 		buttons.setVgap(10);
-		backgroundButtons.setStyle("-fx-background-color: red;");
-		hb.setAlignment(Pos.TOP_RIGHT);
-		sp.setStyle("-fx-background-color:  blue;");
 		
-		hb.getChildren().addAll(homeBut);
-		hb.setPadding(new Insets(20, 10, 10, 10));
+		vbox.setPadding(new Insets(10, 0, 0, 0));
+		vbox.setSpacing(10);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.getChildren().addAll(hb, sp);
+;
 		
-		vbox.setPadding(new Insets(10, 20, 20, 20));
-		gp.getChildren().addAll(backgroundButtons, addEvent, editEvent, editTimeline);
-
-		vbox.getChildren().addAll(gp, hb, buttons, sp);
-		vbox.setStyle("-fx-background-color: lightgrey;");
 		/* Displaying the stage */
 		Scene scene = new Scene(vbox, 1200, 700);
+		scene.getStylesheets().add("project/application.css");
 		primaryStage.setTitle("Timeline View");
 		primaryStage.setScene(scene);
+		primaryStage.setMaximized(true);
 		primaryStage.setResizable(true);
 		primaryStage.show();
 	}
