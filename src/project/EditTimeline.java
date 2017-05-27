@@ -99,7 +99,7 @@ public class EditTimeline extends Application {
 		
 		/*Playing around with Positioning*/
 		VBox root = new VBox(); 
-		//root.setStyle("-fx-background-color: LIGHTGREY");
+		root.setStyle("-fx-background-color: LIGHTGREY");
 		root.setSpacing(10);
 
 		/* Pane Positioning to get buttons beside each other */
@@ -150,30 +150,28 @@ public class EditTimeline extends Application {
 		buttns.getChildren().addAll (grid, submit, deleteTimeline, cancel); 
 		root.getChildren().addAll(buttns); 
 		Scene scene = new Scene(root, 300, 300);
-		scene.getStylesheets().add("project/application.css");
 		
 		/* Here is what the buttons will do */
 		submit.setOnAction(	e -> {			
 			try 
 			{  
 				
+				LocalDate start = startDatePicker.getValue(); 
+				LocalDate end = endDatePicker.getValue(); 	
+				EventFirstdate = java.sql.Date.valueOf(start);
+				EventLastDate = java.sql.Date.valueOf(end);
 				
-				LocalDate	start = startDatePicker.getValue(); 
-				LocalDate	end = endDatePicker.getValue(); 	
+				 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				
-			 EventFirstdate = java.sql.Date.valueOf(start);
-			 EventLastDate = java.sql.Date.valueOf(end);
 				
-			
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				Date temp;
 				Date temp2;
 			    String sql = "SELECT * FROM SaveEvent WHERE id ='"+ TimeID +"'";
 			    PreparedStatement pre = con.prepareStatement(sql);
 			    ResultSet result = pre.executeQuery();
-			    ResultSet result2 = pre.executeQuery();
 			    
-			    if ( LoadTimeline.daysBetween( EventFirstdate, EventLastDate) <= 0 ){
+			    
+			    if (EventFirstdate.after(EventLastDate) ){
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("infor dialog");
 					alert.setHeaderText(null);
@@ -186,34 +184,41 @@ public class EditTimeline extends Application {
 		    	
 			     while (result.next())
 			    {   
-			    
-			    	   temp = sdf.parse(result.getString("StartDate"));  
-				 if( LoadTimeline.daysBetween(temp, EventFirstdate) < 0 ){
+			           
+			    	   temp = sdf.parse(result.getString("StartDate")); 
+			    	  
+				 if(    EventFirstdate.after(temp)  ){
 				    	Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("infor dialog");
 						alert.setHeaderText(null);
-						alert.setContentText("Timeline out of boundaries the existing event "+result.getString("Name")+" starts before ");
+						alert.setContentText("Timeline out of boundaries the existing event "+result.getString("Name")+" starts before! Event Date:"
+						+sdf.format(temp)+"");
 						alert.showAndWait();
 						pass = false;
 						break;
+						
 					 }
+				 
+				 
+		    	 temp2 = sdf.parse(result.getString("EndDate"));
+		     if( temp2.after(EventLastDate) ){
+			    	Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("infor dialog");
+					alert.setHeaderText(null);
+					alert.setContentText("Timeline out of boundaries the existing event "+result.getString("Name")+" ends after! Event Date:"
+							+sdf.format(result.getString("EndDate"))+"");
+					alert.showAndWait();
+					pass = false;
+					break;
+				 
 				    
 			    }
 			     
-			     
-			     while (result2.next())
-			     {   
-			    	 temp2 = sdf.parse(result.getString("EndDate"));
-			     if( LoadTimeline.daysBetween(temp2, EventLastDate)   > 0 ){
-				    	Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("infor dialog");
-						alert.setHeaderText(null);
-						alert.setContentText("Timeline out of boundaries the existing event "+result.getString("Name")+" ends after ");
-						alert.showAndWait();
-						pass = false;
-						break;
-					 }
-			     }
+			    } 
+			   
+			   	 
+			     pre.close();    	
+					
 			    
 			    
 			} 
