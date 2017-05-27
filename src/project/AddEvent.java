@@ -126,7 +126,7 @@ public class AddEvent extends Application {
 
 		address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(140, 10);
+		address.setPrefSize(170, 10);
 		address.setEditable(false);
 
 		sdate = new DatePicker();
@@ -143,7 +143,7 @@ public class AddEvent extends Application {
 		saveButton = new Button("Save");
 		saveButton.setPrefWidth(85);
 		saveButton.setPrefHeight(25);
-		saveButton.setFont(new Font(11));
+		saveButton.setFont(new Font(10));
 		saveButton.setPadding(new Insets(10, 10, 10, 10));
 		saveButton.setOnAction(e -> {
 			if ( name.getText().isEmpty() || sdate.getEditor().getText().isEmpty() 
@@ -296,8 +296,8 @@ public class AddEvent extends Application {
 		filechooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		browse = new Button("Browse");
-		browse.setPrefWidth(50);
+		browse = new Button("...");
+		browse.setPrefWidth(10);
 		browse.setPrefHeight(25);
 		browse.setFont(new Font(10));
 		browse.setMinHeight(25);
@@ -378,7 +378,7 @@ public class AddEvent extends Application {
 		endDate.setAlignment(Pos.CENTER);
 
 		edate.setValue(LocalDate.now());
-		
+		BorderPane p = new BorderPane();
 		HBox hb = new HBox();
 		hb.getChildren().addAll(saveButton, cancelButton);
 		hb.setSpacing(50);
@@ -391,16 +391,14 @@ public class AddEvent extends Application {
 		vb1.setAlignment(Pos.CENTER);
 		vb1.setSpacing(10);
 		
-		HBox hb2 = new HBox();
-		hb2.getChildren().addAll(vb1, table);
-		hb2.setSpacing(10);
-		hb2.setPadding(new Insets(10, 10, 10, 10));
-
-		
-		Scene scene = new Scene(hb2, 610, 500);
+	
+		p.setLeft(vb1);
+		p.setCenter(table);
+		Scene scene = new Scene(p, 610, 500);
 		scene.getStylesheets().add("project/application.css");
 		refreshTable();
 		primaryStage.setScene(scene);
+		
 		primaryStage.show();
 	}
 
