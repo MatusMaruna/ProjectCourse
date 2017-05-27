@@ -163,6 +163,19 @@ public class AddEvent extends Application {
 				
 				//fromDate
 				try {
+					 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					
+					if(!checkForName(name.getText(),id)){
+						pass = false;
+						  Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Error ");
+							alert.setHeaderText("Event already exists!");
+							alert.setContentText("Another Event with the name: "+name.getText()+" already exists. Please choose a different Name");
+							alert.showAndWait();	
+						
+					}
+					
+					
 					LocalDate	start = sdate.getValue(); 
 					LocalDate	end = edate.getValue(); 	
 					
@@ -175,7 +188,8 @@ public class AddEvent extends Application {
 						    Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Alert");
 							alert.setHeaderText("Out of boundaries");
-							alert.setContentText("The event can not end after the timeline ends.");
+							alert.setContentText("The event can not end after the timeline ends. Timeline Boundaries: "
+									+ "StartDate: "+sdf.format(TimelinesFirstDate)+" EndDate: "+sdf.format(TimelinesLastDate)  );
 							alert.showAndWait();
 							
 							ClearFields();
@@ -186,7 +200,8 @@ public class AddEvent extends Application {
 						    Alert alert = new Alert(AlertType.INFORMATION);
 							alert.setTitle("Alert");
 							alert.setHeaderText("Out of boundaries");
-							alert.setContentText("The event can not start before the timeline starts.");
+							alert.setContentText("The event can not start before the timeline starts. Timeline Boundaries: "
+									+ "StartDate: "+sdf.format(TimelinesFirstDate)+" EndDate: "+sdf.format(TimelinesLastDate)  );
 							alert.showAndWait();
 							
 							ClearFields();
@@ -432,6 +447,23 @@ public class AddEvent extends Application {
 		    return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 		        .toLocalDate();
 		  }
+	 public static boolean checkForName(String eventName,int theid) throws SQLException{
+			Connection con = Sqlconnection.DbConnector();
+			 String sql = "SELECT * FROM SaveEvent WHERE ID ='"+ theid +"'";
+			 PreparedStatement pre = con.prepareStatement(sql);
+			 ResultSet result = pre.executeQuery();
+			
+			 while(result.next()){
+				 if(result.getString("Name").equals(eventName)){
+					 pre.close();
+					 return false;
+				}
+			 }
+			 pre.close();
+			return true;	
+			
+		}
+
 	/* Database connection */
 	private void CheckConnection() throws SQLException {
 		con = Sqlconnection.DbConnector();
