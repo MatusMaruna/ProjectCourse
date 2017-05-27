@@ -68,12 +68,12 @@ public class EditTimeline extends Application {
 		    ResultSet result = pre1.executeQuery();
 		    while (result.next())
 		    {
-		    	Timeline tom = new Timeline(result.getRow(), result.getString("Title"), result.getString("Description"),
-							result.getString("StartDate"), result.getString("EndDate"));  
-			    if(result.getString("Title").equals(theName)){
+		    	 if(result.getString("Title").equals(theName)){
 			        this.TimeID = result.getRow();   
 				    System.out.println(TimeID);
-				    this.tm = tom;
+				    this.tm = new Timeline(result.getRow(), result.getString("Title"), result.getString("Description"),
+							result.getString("StartDate"), result.getString("EndDate"));  
+				   
 			    }
 		    }
 		    
@@ -172,7 +172,7 @@ public class EditTimeline extends Application {
 			    ResultSet result = pre.executeQuery();
 			    ResultSet result2 = pre.executeQuery();
 			    
-			    if ( EventFirstdate.after(EventLastDate)){
+			    if ( LoadTimeline.daysBetween( EventFirstdate, EventLastDate) <= 0 ){
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("infor dialog");
 					alert.setHeaderText(null);
@@ -187,7 +187,7 @@ public class EditTimeline extends Application {
 			    {   
 			    
 			    	   temp = sdf.parse(result.getString("StartDate"));  
-				    if(temp.before(EventFirstdate)){
+				 if( LoadTimeline.daysBetween(temp, EventFirstdate) < 0 ){
 				    	Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("infor dialog");
 						alert.setHeaderText(null);
@@ -203,7 +203,7 @@ public class EditTimeline extends Application {
 			     while (result2.next())
 			     {   
 			    	 temp2 = sdf.parse(result.getString("EndDate"));
-			     if(temp2.after(EventLastDate)){
+			     if( LoadTimeline.daysBetween(temp2, EventLastDate)   > 0 ){
 				    	Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("infor dialog");
 						alert.setHeaderText(null);
