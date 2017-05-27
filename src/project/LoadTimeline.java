@@ -358,6 +358,7 @@ public class LoadTimeline extends Application {
 		scene1.getStylesheets().add("project/application.css");
 
 		stage.setScene(scene1);
+		stage.setResizable(true);
 		stage.show();
 		
 		//borderP.setStyle("-fx-background-color:  #FFFFFF;");
