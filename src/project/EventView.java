@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -20,9 +20,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+@SuppressWarnings("unused")
 public class EventView extends Application {
 
 	String eventName;
@@ -43,7 +43,7 @@ public class EventView extends Application {
 		Label description = new Label();
 		Label StartTime = new Label();
 		Label EndTime = new Label();
-		title.setTextFill(Color.BLUE);
+
 		try {
 
 			Connection con = Sqlconnection.DbConnector();
@@ -57,45 +57,44 @@ public class EventView extends Application {
 						result.getString("StartDate"), result.getString("EndDate"));
 
 				if (event.getName().equals(eventName)) { // if statement for
-															// selecting the
-															// event
-					title = new Label("Title: " + event.getName());
-					title.setFont(Font.font("Verdana", 10));
-					
-					description = new Label("Description: " + event.getDescription());
-					description.setFont(Font.font("Verdana", 10));
-					
-					StartTime = new Label("Start Date: " + event.getStartDate());
-					StartTime.setFont(Font.font("Verdana", 10));
-					
-					EndTime = new Label("End Date: " + event.getEndDate());
-					EndTime.setFont(Font.font("Verdana", 10));
+					Label lb = new Label(); // selecting the
+					// event
+					title = new Label("Title:  " + event.getName());
 
-					
-					if(result.getBinaryStream("Image") != null){
-					InputStream in = result.getBinaryStream("Image");
-					
-					OutputStream out = new FileOutputStream(new File("photo.jpg"));
-					byte[] content = new byte[1024];
-					int size = 0;
-					while ((size = in.read(content)) != -1) {
-						out.write(content, 0, size);
+					title.setFont(new Font(15));
 
+					description = new Label("Description:  " + event.getDescription());
+					description.setFont(new Font(15));
+
+					StartTime = new Label("Start Date:  " + event.getStartDate());
+					StartTime.setFont(new Font(15));
+
+					EndTime = new Label("End Date:   " + event.getEndDate());
+					EndTime.setFont(new Font(15));
+
+					if (result.getBinaryStream("Image") != null) {
+					
+						InputStream in = result.getBinaryStream("Image");
+
+						OutputStream out = new FileOutputStream(new File("photo.jpg"));
+						byte[] content = new byte[1024];
+						int size = 0;
+						while ((size = in.read(content)) != -1) {
+							out.write(content, 0, size);
+
+						}
+						in.close();
+
+						AddEvent.im = new Image("file:photo.jpg", 100, 105, true, true);
+						AddEvent.imv = new ImageView(AddEvent.im);
+						AddEvent.imv.setFitHeight(200);
+						AddEvent.imv.setFitWidth(500);
+						AddEvent.imv.setPreserveRatio(true);
+						borderp.setCenter(AddEvent.imv);
+						BorderPane.setAlignment(AddEvent.imv, Pos.CENTER);
+					
 					}
-					in.close();
 
-					AddEvent.im = new Image("file:photo.jpg", 100, 105, true, true);
-					AddEvent.imv = new ImageView(AddEvent.im);
-					AddEvent.imv.setFitHeight(150);
-					AddEvent.imv.setFitWidth(100);
-					AddEvent.imv.setPreserveRatio(true);
-					borderp.setCenter(AddEvent.imv);
-					BorderPane.setAlignment(AddEvent.imv, Pos.CENTER);
-					}
-					
-					
-					
-					
 				} else {
 					System.out.println("DEBUG: Event could not be found ! ");
 				}
@@ -108,8 +107,12 @@ public class EventView extends Application {
 
 		root.getChildren().addAll(title, description, StartTime, EndTime);
 		root.setStyle("-fx-background-color:  #D1DBBD;");
+		root.setPadding(new Insets(20, 20, 20, 20));
 		borderp.setTop(root);
-		Scene scene = new Scene(borderp, 250, 200);
+	
+		borderp.setStyle("-fx-background-color:  #3E606F;");
+		
+		Scene scene = new Scene(borderp, 200, 350);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
