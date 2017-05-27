@@ -99,7 +99,7 @@ public class EditTimeline extends Application {
 		
 		/*Playing around with Positioning*/
 		VBox root = new VBox(); 
-		root.setStyle("-fx-background-color: LIGHTGREY");
+		
 		root.setSpacing(10);
 
 		/* Pane Positioning to get buttons beside each other */
@@ -361,6 +361,7 @@ public class EditTimeline extends Application {
 
 		/* Displaying the stage */
 		primaryStage.setTitle("Edit Timeline: "+theName);
+		scene.getStylesheets().add("project/application.css");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.show(); 
