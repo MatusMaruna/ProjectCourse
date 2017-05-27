@@ -140,12 +140,10 @@ public class AddEvent extends Application {
 		 * SaveEvent is a name of a record in the database so insert and save
 		 * values in to the database
 		 */
-		
-		BorderPane borderP = new BorderPane();
 		saveButton = new Button("Save");
 		saveButton.setPrefWidth(85);
 		saveButton.setPrefHeight(25);
-		saveButton.setFont(new Font(11));
+		saveButton.setFont(new Font(10));
 		saveButton.setPadding(new Insets(10, 10, 10, 10));
 		saveButton.setOnAction(e -> {
 			if ( name.getText().isEmpty() || sdate.getEditor().getText().isEmpty() 
@@ -364,13 +362,10 @@ public class AddEvent extends Application {
 			}
 			primaryStage.show();
 		});
-		borderP.setRight(table);
-		borderP.setPadding(new Insets(20, 20, 20, 20));
-		
+
 		HBox hb1 = new HBox();
 		hb1.getChildren().addAll(AddEvent.address, AddEvent.browse);	
-		
-		
+				
 		GridPane grigp = new GridPane();
 		grigp.setAlignment(Pos.CENTER);
 		grigp.add(AddEvent.address, 0, 5);
@@ -402,8 +397,6 @@ public class AddEvent extends Application {
 		hb2.setPadding(new Insets(10, 10, 10, 10));
 
 		
-		
-		borderP.setPadding(new Insets(10, 10, 10, 40));
 		Scene scene = new Scene(hb2, 610, 500);
 		scene.getStylesheets().add("project/application.css");
 		refreshTable();
