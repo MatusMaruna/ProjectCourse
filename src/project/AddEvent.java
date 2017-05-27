@@ -126,7 +126,7 @@ public class AddEvent extends Application {
 
 		address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(170, 10);
+		address.setPrefSize(140, 10);
 		address.setEditable(false);
 
 		sdate = new DatePicker();
@@ -143,7 +143,7 @@ public class AddEvent extends Application {
 		saveButton = new Button("Save");
 		saveButton.setPrefWidth(85);
 		saveButton.setPrefHeight(25);
-		saveButton.setFont(new Font(10));
+		saveButton.setFont(new Font(11));
 		saveButton.setPadding(new Insets(10, 10, 10, 10));
 		saveButton.setOnAction(e -> {
 			if ( name.getText().isEmpty() || sdate.getEditor().getText().isEmpty() 
@@ -311,8 +311,8 @@ public class AddEvent extends Application {
 		filechooser.getExtensionFilters().addAll(
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		browse = new Button("...");
-		browse.setPrefWidth(10);
+		browse = new Button("Browse");
+		browse.setPrefWidth(50);
 		browse.setPrefHeight(25);
 		browse.setFont(new Font(10));
 		browse.setMinHeight(25);
