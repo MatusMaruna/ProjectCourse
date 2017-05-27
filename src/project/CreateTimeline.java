@@ -105,6 +105,14 @@ public class CreateTimeline extends Application {
 			
 			@Override 
 			public void handle(ActionEvent event) { 
+				
+				
+				try {
+					if(checkForTitle(title.getText()) == true){
+						
+					
+				
+				
 			    if(title.getText().isEmpty()||startDatePicker.getValue()==null||endDatePicker.getValue()==null){
 			    	Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Error ");
@@ -204,12 +212,28 @@ public class CreateTimeline extends Application {
     				// TODO Auto-generated catch block
     				e1.printStackTrace();
     			}
-               
-    			
-    			
-    		
+                }
+                }else{
+                	Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Error ");
+					alert.setHeaderText("Timeline already exists!");
+					alert.setContentText("Another Timeline with the title:"+title.getText()+" already exists. Please choose a different Title");
+					alert.showAndWait();	
+					title.setText(title.getText()+"0");
+						
+					}	
+					
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+				
 			}
-			}
+					
 		});
 		cancelTimeline.setOnAction(new EventHandler<ActionEvent>(){
 			@Override 
@@ -234,4 +258,26 @@ public class CreateTimeline extends Application {
 	public static void main(String[] args) {
 		launch(args); 
 	}
+	public static boolean checkForTitle(String TheTitle) throws SQLException{
+		Connection con = Sqlconnection.DbConnector();
+		 String sql = "SELECT * FROM Timeline WHERE Title ='"+ TheTitle +"'";
+		 PreparedStatement pre = con.prepareStatement(sql);
+		 ResultSet result = pre.executeQuery();
+		
+		 if(result.next()){
+			 pre.close();
+			 return false ;
+		 } else {
+			 pre.close();
+		     return true;
+		 }
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 }
