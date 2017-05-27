@@ -126,7 +126,8 @@ public class EditEvent extends Application {
 		
 		TextField address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(165, 10);
+		address.setPrefSize(140, 10);
+		address.setMinWidth(140);
 		address.setEditable(false);
 
 
@@ -168,10 +169,11 @@ public class EditEvent extends Application {
 		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*text"),
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		Button browse = new Button("hej");
-		browse.setPrefWidth(25);
+		Button browse = new Button("Browse");
+		browse.setPrefWidth(50);
 		browse.setPrefHeight(25);
 		browse.setMinHeight(25);
+		browse.setMinWidth(50);
 		browse.setFont(new Font(11));
 		browse.setOnAction(e -> {
 
