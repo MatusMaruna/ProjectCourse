@@ -126,8 +126,7 @@ public class EditEvent extends Application {
 		
 		TextField address = new TextField();
 		address.setPromptText("File Path");
-		address.setPrefSize(140, 10);
-		address.setMinWidth(140);
+		address.setPrefSize(165, 10);
 		address.setEditable(false);
 
 
@@ -169,11 +168,10 @@ public class EditEvent extends Application {
 		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*text"),
 				new ExtensionFilter("Image Files ", "*.png", "*.jpg"), new ExtensionFilter("All Files", "*.*"));
 
-		Button browse = new Button("Browse");
-		browse.setPrefWidth(50);
+		Button browse = new Button("hej");
+		browse.setPrefWidth(25);
 		browse.setPrefHeight(25);
 		browse.setMinHeight(25);
-		browse.setMinWidth(50);
 		browse.setFont(new Font(11));
 		browse.setOnAction(e -> {
 
@@ -211,18 +209,35 @@ public class EditEvent extends Application {
 				
 			} else {
 				try {
+					
+					
+				if(!name.getText().equals(theName))	{
+					if(!AddEvent.checkForName(name.getText(),ID)){
+						pass = false;
+						  Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Error ");
+							alert.setHeaderText("Event already exists!");
+							alert.setContentText("Another Event with the name: "+name.getText()+" already exists. Please choose a different Name");
+							alert.showAndWait();	
+					}
+				}
+					
+					
+					
+					 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					LocalDate start = sdate.getValue(); 
 					LocalDate end = edate.getValue(); 	
 					EventFirstdate = java.sql.Date.valueOf(start);
 					EventLastDate = java.sql.Date.valueOf(end);
 						
 					if( EventLastDate.after(TimelinesLastDate)   ){
-							 
+						
 						pass = false;
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Alert");
 						alert.setHeaderText("Out of boundaries");
-						alert.setContentText("The event can not end after the timeline ends.");
+						alert.setContentText("The event can not end after the timeline ends. Timeline Boundaries: "
+								+ "StartDate: "+sdf.format(TimelinesFirstDate)+" EndDate: "+sdf.format(TimelinesLastDate)  );
 						alert.showAndWait();	
 					}
 					else if(  TimelinesFirstDate.after(EventFirstdate)   )  {
@@ -230,7 +245,8 @@ public class EditEvent extends Application {
 						Alert alert = new Alert(AlertType.INFORMATION);
 						alert.setTitle("Alert");
 						alert.setHeaderText("Out of boundaries");
-						alert.setContentText("The event can not start before the timeline starts.");
+						alert.setContentText("The event can not start before the timeline starts. Timeline Boundaries: "
+								+ "StartDate: "+sdf.format(TimelinesFirstDate)+" EndDate: "+sdf.format(TimelinesLastDate)  );
 						alert.showAndWait();	
 					}
 					else if(sdate.getValue().isAfter(edate.getValue())&& durational.isSelected() == false) {
