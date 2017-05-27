@@ -152,9 +152,25 @@ public class EditTimeline extends Application {
 		Scene scene = new Scene(root, 300, 300);
 		
 		/* Here is what the buttons will do */
-		submit.setOnAction(	e -> {			
+		submit.setOnAction(	e -> {		
+			
+			
+			
+			
 			try 
 			{  
+				 if(!CreateTimeline.checkForTitle(title.getText())){
+					 pass = false;
+					    Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Error ");
+						alert.setHeaderText("Timeline already exists!");
+						alert.setContentText("Another Timeline with the title:"+title.getText()+" already exists. Please choose a different Title");
+						alert.showAndWait();	
+							
+				 }
+				
+				
+				
 				
 				LocalDate start = startDatePicker.getValue(); 
 				LocalDate end = endDatePicker.getValue(); 	
