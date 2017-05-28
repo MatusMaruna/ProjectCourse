@@ -222,7 +222,7 @@ public class EditTimeline extends Application {
 					alert.setTitle("infor dialog");
 					alert.setHeaderText(null);
 					alert.setContentText("Timeline out of boundaries the existing event "+result.getString("Name")+" ends after! Event Date:"
-							+sdf.format(result.getString("EndDate"))+"");
+							+result.getString("EndDate")+"");
 					alert.showAndWait();
 					pass = false;
 					break;
